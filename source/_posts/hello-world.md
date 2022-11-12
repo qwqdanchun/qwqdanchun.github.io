@@ -1,44 +1,12 @@
 ---
-title: Hello World
+title: Hello World Again
 date: 2022-11-11 19:15:50
 categories: 
-- 测试
+- 生活
 tags:
-- 123
-- abc
 ---
-Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
+历时半个多月，删站的我又把博客搭起来了，这次从用了五年的Wordpress换成了Hexo，自动部署的纯静态博客似乎也是不错的
 
-## Quick Start
+不过之前的文章没有保存了，很多都是早年写的东西，现在看来已经没有意义了
 
-### Create a new post
-
-``` bash
-$ hexo new "My New Post"
-```
-
-More info: [Writing](https://hexo.io/docs/writing.html)
-
-### Run server
-
-``` bash
-$ hexo server
-```
-
-More info: [Server](https://hexo.io/docs/server.html)
-
-### Generate static files
-
-``` bash
-$ hexo generate
-```
-
-More info: [Generating](https://hexo.io/docs/generating.html)
-
-### Deploy to remote sites
-
-``` bash
-$ hexo deploy
-```
-
-More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
+后面会尽量恢复记笔记的习惯，也就顺手更一些文章吧，希望我的文章可以帮到你
