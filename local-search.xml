@@ -5,12 +5,26 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="/2022/11/11/hello-world/"/>
-    <url>/2022/11/11/hello-world/</url>
+    <link href="/2022/11/12/hello-world/"/>
+    <url>/2022/11/12/hello-world/</url>
     
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
     
     
+    <categories>
+      
+      <category>测试</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>123</tag>
+      
+      <tag>abc</tag>
+      
+    </tags>
     
   </entry>
   
@@ -24,7 +38,7 @@
     <link href="/"/>
     <url>/</url>
     
-    <content type="html"><![CDATA[<h3 id="man-technologist-About-Me"><a href="#man-technologist-About-Me" class="headerlink" title=":man_technologist: About Me :"></a>:man_technologist: About Me :</h3><p>qwqdanchun,a redteam developer</p><hr><h3 id="🛠-nbsp-Languages-and-Tools"><a href="#🛠-nbsp-Languages-and-Tools" class="headerlink" title="🛠 &nbsp;Languages and Tools :"></a>🛠 &nbsp;Languages and Tools :</h3><p><img src="https://github.com/devicons/devicon/blob/master/icons/csharp/csharp-original.svg" title="csharp" alt="csharp" width="40" height="40"/>&nbsp;<img src="https://github.com/devicons/devicon/blob/master/icons/c/c-original.svg" title="c" alt="c" width="40" height="40"/>&nbsp;<img src="https://github.com/devicons/devicon/blob/master/icons/cplusplus/cplusplus-original.svg" title="cplusplus" alt="cplusplus" width="40" height="40"/>&nbsp;<img src="https://github.com/devicons/devicon/blob/master/icons/java/java-original.svg" title="java" alt="java" width="40" height="40"/>&nbsp;<img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original.svg" title="python" alt="python" width="40" height="40"/>&nbsp;<img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" title="JavaScript" alt="JavaScript" width="40" height="40"/>&nbsp;<img src="https://github.com/devicons/devicon/blob/master/icons/go/go-original.svg" title="go" alt="go" width="40" height="40"/>&nbsp;<p>  <img src="https://img.shields.io/badge/OS-Windows-informational?style=flat&logo=windows&logoColor=white&color=2bbc8a"><br>  <img src="https://img.shields.io/badge/Editor-Visual_Studio-informational?style=flat&logo=visualstudio&logoColor=white&color=2bbc8a"><br>  <img src="https://img.shields.io/badge/Editor-Visual_Studio_Code-informational?style=flat&logo=visualstudiocode&logoColor=white&color=2bbc8a"><br>  <img src="https://img.shields.io/badge/Editor-IntelliJ_IDEA-2ea44f?style=flat&logo=IntelliJ+IDEA&logoColor=white&color=2bbc8a"></p></p><hr>]]></content>
+    <content type="html"><![CDATA[<p>这里是<em>簞純</em>，一个<del>单纯的</del>日常生产bug再debug的菜鸡红队安全开发，目前主要做Windows下的二进制方向开发</p><p><strong>ID</strong>：<em>簞純 / qwqdanchun</em></p><p><strong>Tag</strong>：伪技术宅，干饭人，老二次元，佛系，咕咕咕，夜猫子</p><p><strong>QQ聊天群</strong>：<a href="https://jq.qq.com/?_wv=1027&k=Ok58ZNSd">814084837</a></p>]]></content>
     
   </entry>
   
