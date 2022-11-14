@@ -1015,12 +1015,12 @@ links:
   # Custom content at the bottom of the links
   custom:
     enable: true
-    content: '<hr><p>在发送邮件至qwqdanchun@qq.com申请加入我的友链，按如下格式提供信息：</p><ul><li>博客名：簞純's Blog</li><li>简介：我惭携宝剑，只为看山来</li><li>链接：https://blog.qwqdanchun.com/</li><li>图片：https://blog.qwqdanchun.com/img/qwqdanchun.jpg</li></ul>'
+    content: "<hr><p>可以在此留言申请加入我的友链，按如下格式提供信息：</p><ul><li>博客名：簞純's Blog</li><li>简介：我惭携宝剑，只为看山来</li><li>链接：https://blog.qwqdanchun.com</li><li>图片：https://blog.qwqdanchun.com/img/qwqdanchun.jpg</li></ul>"
 
   # 评论插件
   # Comment plugin
   comments:
-    enable: false
+    enable: true
     # 指定的插件，需要同时设置对应插件的必要参数
     # The specified plugin needs to set the necessary parameters at the same time
     # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus
@@ -1083,3 +1083,4 @@ static_prefix:
   twikoo: https://lib.baomitu.com/twikoo/1.6.7/
 
   hint: https://lib.baomitu.com/hint.css/2.7.0/
+
