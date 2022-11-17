@@ -78,7 +78,9 @@ CMD.EXE /C "del gp.sdb"
 
 #### 打包exe
 
-打包使用Windows 7机器，安装[Python3.8](https://www.python.org/ftp/python/3.8.10/python-3.8.10-amd64.exe)，[Git](https://github.com/git-for-windows/git/releases/download/v2.38.1.windows.1/Git-2.38.1-64-bit.exe)，之后执行以下命令
+打包使用Windows Server 2008 R2机器，安装[Python3.8](https://www.python.org/ftp/python/3.8.10/python-3.8.10-amd64.exe)，[Git](https://github.com/git-for-windows/git/releases/download/v2.38.1.windows.1/Git-2.38.1-64-bit.exe)，之后执行以下命令
+
+> *Windows Server 2008 R2以保证大部分系统能正常运行，Python版本推荐3.8.10，可低不可高*
 
 ```bash
 git clone https://github.com/cube0x0/impacket
@@ -88,7 +90,7 @@ pip3 install six pycryptodomex pyasn1 pyinstaller
 pyinstaller --clean --onefile CVE-2021-1675.py
 ```
 
-生成的文件在`\impacket\dist\CVE-2021-1675.exe`
+生成的文件在 `\impacket\dist\CVE-2021-1675.exe`
 
 ### 4.执行
 
