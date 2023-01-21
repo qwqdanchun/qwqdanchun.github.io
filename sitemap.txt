@@ -1,6 +1,7 @@
 https://blog.qwqdanchun.com/CodePage_injection/
 https://blog.qwqdanchun.com/PrintNightmare/
 https://blog.qwqdanchun.com/hello-world/
+https://blog.qwqdanchun.com/CobaltStrike_Modify/
 https://blog.qwqdanchun.com/about/index.html
 https://blog.qwqdanchun.com/
 https://blog.qwqdanchun.com/tags/%E6%B3%A8%E5%85%A5/
@@ -11,6 +12,9 @@ https://blog.qwqdanchun.com/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/
 https://blog.qwqdanchun.com/tags/PrintNightmare/
 https://blog.qwqdanchun.com/tags/CVE-2021-1675/
 https://blog.qwqdanchun.com/tags/CVE-2021-34527/
+https://blog.qwqdanchun.com/tags/CobaltStrike/
+https://blog.qwqdanchun.com/tags/%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91/
 https://blog.qwqdanchun.com/categories/%E6%B3%A8%E5%85%A5/
 https://blog.qwqdanchun.com/categories/%E6%BC%8F%E6%B4%9E/
 https://blog.qwqdanchun.com/categories/%E7%94%9F%E6%B4%BB/
+https://blog.qwqdanchun.com/categories/CobaltStrike/
