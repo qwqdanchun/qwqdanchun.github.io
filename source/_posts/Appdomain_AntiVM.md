@@ -59,22 +59,19 @@ public static void loadAppDomainModule(string sMethod, string sAppDomain, byte[]
 
 还是后面想起来错误是FileNotFoundException，就看错误提示感觉很不合理，进而用Procmon跟了下，发现Appdomain加载程序集居然有一套类似dll搜索的搜索顺序，会在自身目录以及默认目录搜索文件，未发现文件就报错。
 
+这个问题的本质是Appdomain在CreateInstanceAndUnwrap中会根据程序集名称去磁盘上加载ShadowRunner所在程序集，从而产生一系列的问题，类似的情况在Appdomain的其他函数中也可以复现。
+
 可以说是完全断了这种操作的Assembly去做一些转化再免杀的方案，如果真想搞的话，可以hook一下自己进程的NtCreateFile等函数，让进程认为有这个文件嘛
 
 # 附带的利用
 
-坏消息是，动态加载卸载这个东西很难去做武器化了，好消息是，我们知道了Appdomain找不到文件名对应的文件就不加载
+坏消息是，动态加载卸载这个东西很难去做武器化了，好消息是，我们知道了Appdomain中找不到文件名对应的文件就不加载的特性（大概注意到这个问题的人不太多，毕竟按照写Assembly.Load的思路，不会遇到这个问题）
 
 所以就制作了一个简单的免杀模板（此处只展示加载部分）
 
 ```csharp
 using System;
-using System.Drawing;
-using System.Linq;
-using System.Management;
-using System.Net;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace test
 {
