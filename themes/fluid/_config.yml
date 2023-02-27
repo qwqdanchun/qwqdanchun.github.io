@@ -1001,6 +1001,30 @@ links:
   # Member item of page
   items:
     - {
+      title: "⑨BIE",
+      intro: "伪技术宅的迷之地",
+      link: "https://9bie.org/",
+      avatar: "https://www.gravatar.com/avatar/c004f07e4aeea5ada1cc18fa390f6e09"
+    }
+    - {
+      title: "Zu1k",
+      intro: "A boy dreaming of traveling around the world.",
+      link: "https://zu1k.com/",
+      avatar: "https://zu1k.com/images/logo.jpg"
+    }
+    - {
+      title: "echowxsy",
+      intro: "No Intro",
+      link: "https://echowxsy.com/",
+      avatar: "/img/avatar.png"
+    }
+    - {
+      title: "Adminxe",
+      intro: "捡破烂的",
+      link: "https://www.adminxe.com/",
+      avatar: "/img/avatar.png"
+    }
+    - {
       title: "To Add",
       intro: "No Intro",
       link: "/",
