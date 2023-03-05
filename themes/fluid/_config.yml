@@ -1025,6 +1025,12 @@ links:
       avatar: "/img/avatar.png"
     }
     - {
+      title: "CDxiaodong",
+      intro: "简单点",
+      link: "https://cdxiaodong.github.io/",
+      avatar: "https://cdxiaodong.github.io/img/avatar.png"
+    }
+    - {
       title: "To Add",
       intro: "No Intro",
       link: "/",
@@ -1039,7 +1045,7 @@ links:
   # Custom content at the bottom of the links
   custom:
     enable: true
-    content: "<hr><p>可以在此留言申请加入我的友链，按如下格式提供信息：</p><ul><li>名称：簞純's Blog</li><li>简介：我惭携宝剑，只为看山来</li><li>链接：https://blog.qwqdanchun.com</li><li>图片：https://blog.qwqdanchun.com/img/qwqdanchun.jpg</li></ul>"
+    content: "<hr><p>可以在此留言申请加入我的友链，按如下格式提供信息：</p><ul><li>名称：簞純</li><li>简介：我惭携宝剑，只为看山来</li><li>链接：https://blog.qwqdanchun.com</li><li>图片：https://blog.qwqdanchun.com/img/qwqdanchun.jpg</li></ul>"
 
   # 评论插件
   # Comment plugin
