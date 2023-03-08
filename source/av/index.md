@@ -6,7 +6,7 @@ layout: false
 <html>
 <head>
 <meta charset="utf-8">
-<title>Windows提权/杀软在线对比</title>
+<title>Windows杀软在线对比</title>
 <script>
     avList = {
 "_avp32.exe":"卡巴斯基",
