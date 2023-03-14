@@ -24,10 +24,9 @@
 <meta property="og:description" content="概述CVE-2021-1675 &#x2F; CVE-2021-34527 这两个洞本质上就是一个洞，只是因为修复的问题分配了两个编号。具体的漏洞分析就不赘述了，很早就有人发过，没必要炒冷饭，这里只总结下实际使用时可能出现的问题，以及很多poc中不会提到的细节 复现攻击环境注意事项1.域相关目标机器为域内Windows Server机器时，攻击机必须为同一域内的机器；目标机器为非域环境Window">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-11-12T19:34:50.000Z">
-<meta property="article:modified_time" content="2023-03-08T07:38:50.634Z">
+<meta property="article:modified_time" content="2023-03-14T17:39:17.798Z">
 <meta property="article:author" content="qwqdanchun">
-<meta property="article:tag" content="武器化">
-<meta property="article:tag" content="漏洞复现">
+<meta property="article:tag" content="0&#x2F;N Day">
 <meta property="article:tag" content="PrintNightmare">
 <meta property="article:tag" content="CVE-2021-1675">
 <meta property="article:tag" content="CVE-2021-34527">
@@ -306,17 +305,17 @@
     
     <div class="category row nomargin-x">
       <a class="category-item 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="漏洞"
-        id="heading-f58f4896d3ac66f9216963b2c98e4412" role="tab" data-toggle="collapse" href="#collapse-f58f4896d3ac66f9216963b2c98e4412"
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Develop"
+        id="heading-1bedc6fb14c15b2e99872ebdbc317bf2" role="tab" data-toggle="collapse" href="#collapse-1bedc6fb14c15b2e99872ebdbc317bf2"
         aria-expanded="true"
       >
-        漏洞
-        <span class="list-group-count">(1)</span>
+        Develop
+        <span class="list-group-count">(3)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-f58f4896d3ac66f9216963b2c98e4412"
-           role="tabpanel" aria-labelledby="heading-f58f4896d3ac66f9216963b2c98e4412">
+      <div class="category-collapse collapse show" id="collapse-1bedc6fb14c15b2e99872ebdbc317bf2"
+           role="tabpanel" aria-labelledby="heading-1bedc6fb14c15b2e99872ebdbc317bf2">
         
         
           
@@ -329,6 +328,24 @@
            class="list-group-item list-group-item-action
            active">
           <span class="category-post">PrintNightmare 实战利用Tips</span>
+        </a>
+      
+    
+      
+      
+        <a href="/CobaltStrike_Modify/" title="CobaltStrike二次开发"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CobaltStrike二次开发</span>
+        </a>
+      
+    
+      
+      
+        <a href="/Appdomain_AntiVM/" title="一种利用Appdomain特性实现隐蔽的反沙箱分析"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">一种利用Appdomain特性实现隐蔽的反沙箱分析</span>
         </a>
       
     
@@ -356,7 +373,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年3月8日 下午
+                    本文最后更新于：2023年3月15日 凌晨
                   
                 
               </p>
@@ -421,7 +438,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E6%BC%8F%E6%B4%9E/" class="category-chain-item">漏洞</a>
+  <a href="/categories/Develop/" class="category-chain-item">Develop</a>
   
   
 
@@ -436,9 +453,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%AD%A6%E5%99%A8%E5%8C%96/">#武器化</a>
-      
-        <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">#漏洞复现</a>
+        <a href="/tags/0-N-Day/">#0/N Day</a>
       
         <a href="/tags/PrintNightmare/">#PrintNightmare</a>
       
@@ -475,7 +490,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年3月8日</div>
+          <div>2023年3月15日</div>
         </div>
       
       
