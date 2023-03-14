@@ -63,9 +63,10 @@ namespace Demo
         static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, MoveFileFlags dwFlags);
         static void Main(string[] args)
         {
+            File.WriteAllText("C:\\Windows\\Temp\\1.vbs", "msgbox(\"test\")");
             string newdisk = "X:";
-            string filepath = "C:\\Windows\\Temp\\1.txt";
-            string filename = "1.txt";
+            string filepath = "C:\\Windows\\Temp\\1.vbs";
+            string filename = "1.vbs";
 
             string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string programs = appdata + "\\Microsoft\\Windows\\Start Menu\\Programs";

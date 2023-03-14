@@ -2,12 +2,11 @@
 title: Code Page注入方法的武器化
 date: 2022-11-25 21:03:31
 categories: 
-- 注入
+- Injection
 tags:
-- 注入
+- Injection
 - CodePage
 - NLS
-- 武器化
 ---
 # 起源
 

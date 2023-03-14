@@ -2,7 +2,7 @@
 title: 一种利用Appdomain特性实现隐蔽的反沙箱分析
 date: 2023-2-17 09:29:19
 categories: 
-- .Net
+- Develop
 tags:
 - .Net
 - Appdomain

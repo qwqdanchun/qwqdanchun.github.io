@@ -2,7 +2,7 @@
 title: Hello World Again
 date: 2022-11-11 19:15:50
 categories: 
-- 生活
+- Life
 tags:
 ---
 历时半个多月，删站的我又决定把博客搭起来了，这次从用了五年的Wordpress换成了Hexo，自动部署的纯静态博客似乎也是不错的

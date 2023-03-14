@@ -2,11 +2,10 @@
 title: CobaltStrike二次开发
 date: 2023-1-21 23:59:59
 categories: 
-- CobaltStrike
+- Develop
 tags:
 - CobaltStrike
-- 二次开发
-- 武器化
+- Modify
 ---
 2022年过的真的很快啊，一转眼就2023了，本来想着元旦的时候，搞一点东西分享出来，但是因为太忙没有腾出时间，那就只好赶着春节前夕，水一点文章了。
 

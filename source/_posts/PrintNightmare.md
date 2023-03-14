@@ -2,13 +2,12 @@
 title: PrintNightmare 实战利用Tips
 date: 2022-11-13 3:34:50
 categories: 
-- 漏洞
+- Develop
 tags:
-- 漏洞复现
+- 0/N Day
 - PrintNightmare
 - CVE-2021-1675
 - CVE-2021-34527
-- 武器化
 ---
 # **概述**
 
