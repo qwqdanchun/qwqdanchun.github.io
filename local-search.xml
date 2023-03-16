@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>记录绕过某考试软件的安全防护</title>
+    <link href="/Bypass_Secure_Browser/"/>
+    <url>/Bypass_Secure_Browser/</url>
+    
+    <content type="html"><![CDATA[<p>早在疫情期间就经历了好久的线上考试，最近又遇到了类似的需求，正好就写写相关的东西吧。为了防止暴露是哪几款软件，文中就不放图了，只是说说方法。</p><h1 id="逆向相关"><a href="#逆向相关" class="headerlink" title="逆向相关"></a>逆向相关</h1><p>目前遇到过的主流是C#&#x2F;Electron的程序，也有部分C++的程序。</p><p>C#的可以直接用DnSpy查看代码并修改</p><p>Electron的可以解包asar查看代码，修改后也可以打包替换回去</p><p>C++的一般IDA辅助分析后，可以手动跳过部分函数或判断</p><p>目前还未发现对自身文件进行校验的例子，如果后续出现，还需要hook相关函数进行绕过</p><p>注意有些修改不能无脑删除函数，因为有些会有操作记录等要注意保留</p><h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>想办法进入考试模式，进行初步测试，在进入前上线远控（为防止部分软件限制未知进程，可以直接注入系统进程），并记录考试过程中存在的进程，以及考试相关进程加载的dll。对这些文件进行简单的筛选即可找到涉及反作弊的文件。</p><p>以下描述注意针对考试中使用远控远程辅助答题的情况</p><h1 id="防护措施及应对"><a href="#防护措施及应对" class="headerlink" title="防护措施及应对"></a>防护措施及应对</h1><h2 id="1-截屏"><a href="#1-截屏" class="headerlink" title="1.截屏"></a>1.截屏</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>Windows下考试软件防止截屏的方法其实很简单，都是基于<a href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowdisplayaffinity">SetWindowDisplayAffinity</a>这个api</p><h3 id="绕过"><a href="#绕过" class="headerlink" title="绕过"></a>绕过</h3><p>逆向后删除此函数调用，或者修改第二个参数内容即可。如果是Electron的浏览器，可以去ASAR解包的代码中搜索setContentProtection，如果存在，也删除其调用</p><h2 id="2-模拟输入"><a href="#2-模拟输入" class="headerlink" title="2.模拟输入"></a>2.模拟输入</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>SetWindowsHookEx挂钩WH_KEYBOARD_LL，并判断KBDLLHOOKSTRUCT的flags，模拟键盘输入时flags为LLKHF_INJECTED</p><p>SetWindowsHookEx挂钩WH_MOUSE_LL，并判断MOUSEHOOKSTRUCT的wHitTestCode，在真实鼠标按键时为0，而在使用模拟鼠标时，为1</p><h3 id="绕过-1"><a href="#绕过-1" class="headerlink" title="绕过"></a>绕过</h3><p>1.逆向查找挂钩的回调函数（搜索CallNextHookEx调用，一般此调用上面几行就是过滤函数），修改判断条件或直接删除相关内容即可</p><p>2.SetWindowsHookEx的回调是一个链，后添加的先处理，也就是说只有保证自己的回调在链的头部，即可自己修改flags值再CallNextHookEx继续传递</p><h2 id="3-进程"><a href="#3-进程" class="headerlink" title="3.进程"></a>3.进程</h2><p>将使用的远控注入进系统进程，规避可疑进程名的检测，不过大多数考试软件也没有太多的进程检测，也检测不过来</p><h2 id="4-流量"><a href="#4-流量" class="headerlink" title="4.流量"></a>4.流量</h2><p>可以通过代理抓包，部分考试软件回传信息没有加密，可以直接拦包之后正则匹配改包再重发</p><h1 id="叠甲"><a href="#叠甲" class="headerlink" title="叠甲"></a>叠甲</h1><p>本文内容仅供技术研究，请勿用于非法行为。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Crack</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>.Net</tag>
+      
+      <tag>Crack</tag>
+      
+      <tag>Electron</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>一个不太好用的过360启动方案</title>
     <link href="/Bypass_Startup/"/>
     <url>/Bypass_Startup/</url>

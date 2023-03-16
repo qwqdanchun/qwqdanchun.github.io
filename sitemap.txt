@@ -5,11 +5,14 @@ https://blog.qwqdanchun.com/CobaltStrike_Modify/
 https://blog.qwqdanchun.com/about/index.html
 https://blog.qwqdanchun.com/av/index.html
 https://blog.qwqdanchun.com/Appdomain_AntiVM/
+https://blog.qwqdanchun.com/Bypass_Secure_Browser/
 https://blog.qwqdanchun.com/Bypass_Startup/
 https://blog.qwqdanchun.com/
 https://blog.qwqdanchun.com/tags/Net/
 https://blog.qwqdanchun.com/tags/Appdomain/
 https://blog.qwqdanchun.com/tags/Anti-VM/
+https://blog.qwqdanchun.com/tags/Crack/
+https://blog.qwqdanchun.com/tags/Electron/
 https://blog.qwqdanchun.com/tags/Bypass/
 https://blog.qwqdanchun.com/tags/360/
 https://blog.qwqdanchun.com/tags/Persistence/
@@ -23,6 +26,7 @@ https://blog.qwqdanchun.com/tags/CVE-2021-34527/
 https://blog.qwqdanchun.com/tags/CobaltStrike/
 https://blog.qwqdanchun.com/tags/Modify/
 https://blog.qwqdanchun.com/categories/Develop/
+https://blog.qwqdanchun.com/categories/Crack/
 https://blog.qwqdanchun.com/categories/Persistence/
 https://blog.qwqdanchun.com/categories/Injection/
 https://blog.qwqdanchun.com/categories/Life/

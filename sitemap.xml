@@ -65,6 +65,15 @@
   </url>
   
   <url>
+    <loc>https://blog.qwqdanchun.com/Bypass_Secure_Browser/</loc>
+    
+    <lastmod>2023-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.qwqdanchun.com/Bypass_Startup/</loc>
     
     <lastmod>2023-03-16</lastmod>
@@ -98,6 +107,20 @@
   
   <url>
     <loc>https://blog.qwqdanchun.com/tags/Anti-VM/</loc>
+    <lastmod>2023-03-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.qwqdanchun.com/tags/Crack/</loc>
+    <lastmod>2023-03-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.qwqdanchun.com/tags/Electron/</loc>
     <lastmod>2023-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -191,6 +214,13 @@
   
   <url>
     <loc>https://blog.qwqdanchun.com/categories/Develop/</loc>
+    <lastmod>2023-03-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.qwqdanchun.com/categories/Crack/</loc>
     <lastmod>2023-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

