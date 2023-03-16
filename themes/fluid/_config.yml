@@ -1031,6 +1031,12 @@ links:
       avatar: "https://cdxiaodong.github.io/img/avatar.png"
     }
     - {
+      title: "Tajang",
+      intro: "临渊羡鱼，不如退而结网",
+      link: "https://rtbug.com",
+      avatar: "https://rtbug.com/avatar.png"
+    }
+    - {
       title: "To Add",
       intro: "No Intro",
       link: "/",
