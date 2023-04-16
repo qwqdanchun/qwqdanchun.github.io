@@ -106,7 +106,7 @@ namespace Demo
             MOVEFILE_CREATE_HARDLINK = 0x00000010,
             MOVEFILE_FAIL_IF_NOT_TRACKABLE = 0x00000020
         }
-      
+  
         public static void RegisterFileType()
         {
             RegistryKey softwareKey = Registry.ClassesRoot.OpenSubKey(".qwq");
@@ -128,7 +128,7 @@ namespace Demo
             RegistryKey openKey = shellKey.CreateSubKey("Open");
 
             RegistryKey commandKey = openKey.CreateSubKey("Command");
-            commandKey.SetValue("", "wscript.exe //E:vbscript" + " %1");
+            commandKey.SetValue("", "wscript.exe //E:vbscript" + " \"%1\"");
             relationKey.Close();
         }
 
