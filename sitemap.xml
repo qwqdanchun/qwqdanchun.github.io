@@ -65,15 +65,6 @@
   </url>
   
   <url>
-    <loc>https://blog.qwqdanchun.com/Appdomain_AntiVM/</loc>
-    
-    <lastmod>2023-04-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.qwqdanchun.com/Bypass_Secure_Browser/</loc>
     
     <lastmod>2023-04-16</lastmod>
@@ -84,6 +75,15 @@
   
   <url>
     <loc>https://blog.qwqdanchun.com/Bypass_Startup/</loc>
+    
+    <lastmod>2023-04-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.qwqdanchun.com/Appdomain_AntiVM/</loc>
     
     <lastmod>2023-04-16</lastmod>
     
