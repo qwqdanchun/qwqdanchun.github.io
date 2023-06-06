@@ -1035,6 +1035,11 @@ links:
       intro: "临渊羡鱼，不如退而结网",
       link: "https://rtbug.com",
       avatar: "https://rtbug.com/avatar.png"
+    }- {
+      title: "m1kh",
+      intro: "m1kh的博客",
+      link: "https://blog.m1kh.com/",
+      avatar: "https://blog.m1kh.com/h_img/m1kh.jpg"
     }
     - {
       title: "To Add",
