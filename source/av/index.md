@@ -2,7 +2,6 @@
 layout: false
 ---
 {% raw %}
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -1400,7 +1399,7 @@ function av() {
     var tasklist = document.getElementById('tasklist').value;
     var result = document.getElementById('result');
     if (tasklist != "" && tasklist) {
-        let tasks=tasklist.split(" ");
+        let tasks=tasklist.split(/\s+/);
         if (tasks) {
             var htmlContent = "";
             for (i = 0; i < Object.keys(avList).length; i++) {
