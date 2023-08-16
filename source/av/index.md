@@ -2,6 +2,7 @@
 layout: false
 ---
 {% raw %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -185,7 +186,6 @@ layout: false
 "avgupsvc.exe":"AVG",
 "avgvv.exe":"AVG",
 "avgw.exe":"AVG",
-"avgwb.dat":"AVG",
 "avgwb.exe":"Grisoft AVG AntiVirus",
 "avgwdsvc.exe":"AVG Anti-Virus",
 "avgwizfw.exe":"AVG",
@@ -268,7 +268,6 @@ layout: false
 "bullguardscanner.exe":"BullGuard Internet Security",
 "bullguardtray.exe":"BullGuard Internet Security",
 "bullguardupdate.exe":"BullGuard Internet Security",
-"bwgo0000":"F-Secure Backweb Temporary Files",
 "bwgo0000.exe":"F-Secure Backweb",
 "bwmeterconsvc.exe":"BWMeter Connections Service",
 "ca.exe":"eTrust Firewall",
@@ -284,8 +283,7 @@ layout: false
 "capfasem.exe":"CA Internet Security Suite 2008",
 "capfsem.exe":"CA Internet Security Suite 2007",
 "capmuamagt.exe":"CA eTrust Integrated Threat Management 8.1",
-"cappactiveprotection.exe":"CA Internet Security Suite 2007/8/9",
-"cappactiveprotection.exe   ":"CA Internet Security Suite 2007",
+"cappactiveprotection.exe":"CA Internet Security Suite 2007",
 "casc.exe":"CA Internet Security Suite 2009",
 "casecuritycenter.exe":"CA Internet Security Suite 2007",
 "caunst.exe":"CA Internet Security Suite 2007",
@@ -383,7 +381,6 @@ layout: false
 "datemanager.exe":"Date Manager",
 "dbserv.exe":"Symantec",
 "dbsrv9.exe":"Symantec",
-"deep ui.exe":"Deep Instinct NGAV",
 "deepmgmtservice.exe":"Deep Instinct NGAV",
 "deeprpcserver":"Deep Instinct NGAV",
 "deepstaticservice.exe":"Deep Instinct NGAV",
@@ -1179,7 +1176,6 @@ layout: false
 "snsrv.exe":"Secret Net",
 "soap.exe":"system soap pro",
 "softmanager.exe":"360软件管家",
-"sophos ui.exe":"Sophos杀毒",
 "sophoscleanm.exe":"Sophos杀毒",
 "sophoscleanm64.exe":"Sophos Clean Service",
 "sophosfilescanner.exe":"Sophos杀毒",
@@ -1404,8 +1400,7 @@ function av() {
     var tasklist = document.getElementById('tasklist').value;
     var result = document.getElementById('result');
     if (tasklist != "" && tasklist) {
-        var re = new RegExp("(.*?)\.exe", "g");
-        var tasks = tasklist.match(re);
+        let tasks=tasklist.split(" ");
         if (tasks) {
             var htmlContent = "";
             for (i = 0; i < Object.keys(avList).length; i++) {
