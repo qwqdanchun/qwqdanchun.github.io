@@ -12,10 +12,10 @@ tags:
 
 1. 附带tf卡槽，可自选是否附带储存空间
 2. 使用CH552单片机，方便上手
-2. 通用G2版型，方便购买或定制外壳
-3. 带有USBHUB，可以同时作为U盘和可编程USB控制设备使用
-4. 带有霍尔开关，用于控制烧写，也可用于连接后的控制开关，即使加壳也不影响后续烧写
-5. 成本低廉，适合大批量使用
+3. 通用G2版型，方便购买或定制外壳
+4. 带有USBHUB，可以同时作为U盘和可编程USB控制设备使用
+5. 带有霍尔开关，用于控制烧写，也可用于连接后的控制开关，即使加壳也不影响后续烧写
+6. 成本低廉，适合大批量使用
 
 # 使用方法
 
@@ -26,6 +26,8 @@ Windows系统，安装[Arduino IDE](https://www.arduino.cc/en/software)和[WCHIS
 ## 2.配置Arduino IDE
 
 打开Arduino IDE，依次点击File-Preferences...，在Settings中的Additional Boards Manager URL中输入 `https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xduino_mcs51_index.json`，并点击OK。
+
+点击Board-Boards Manager...，搜索并安装Ch55xduino
 
 之后点击如图，选择CH552
 
@@ -103,7 +105,7 @@ void loop() {
 
 其中目标程序文件为上一步编译得到的build文件夹中.hex文件的路径，注意下载配置脚一定要改为P1.5
 
-使用磁铁贴近并插入电脑，即可看到设备列表有设备出现，选择对应设备并点击下载即可烧写成功
+使用磁铁贴近霍尔元件位置并将设备插入电脑，即可看到WCHISPStudio的设备列表有设备出现，选择对应设备并点击下载即可烧写成功
 
 # 注意事项
 
