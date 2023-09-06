@@ -1048,6 +1048,13 @@ links:
       link: "https://www.sy4.top/",
       avatar: "/img/avatar.png"
     }
+    
+    - {
+      title: "Zy143L",
+      intro: "宁宁's Blog",
+      link: "https://momoe.link/",
+      avatar: "https://momoe.link/img/tx.png"
+    }
     - {
       title: "To Add",
       intro: "No Intro",
