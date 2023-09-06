@@ -6,6 +6,7 @@ https://blog.qwqdanchun.com/hello-world/
 https://blog.qwqdanchun.com/CobaltStrike_Modify/
 https://blog.qwqdanchun.com/about/index.html
 https://blog.qwqdanchun.com/av/index.html
+https://blog.qwqdanchun.com/Ch552_USBHUB/
 https://blog.qwqdanchun.com/Appdomain_AntiVM/
 https://blog.qwqdanchun.com/Backdoor_In_Source/
 https://blog.qwqdanchun.com/Bypass_Secure_Browser/
@@ -33,6 +34,7 @@ https://blog.qwqdanchun.com/tags/Forensics/
 https://blog.qwqdanchun.com/tags/Telegram/
 https://blog.qwqdanchun.com/tags/CobaltStrike/
 https://blog.qwqdanchun.com/tags/Modify/
+https://blog.qwqdanchun.com/tags/USB/
 https://blog.qwqdanchun.com/categories/Develop/
 https://blog.qwqdanchun.com/categories/Backdoor/
 https://blog.qwqdanchun.com/categories/Crack/
@@ -41,3 +43,4 @@ https://blog.qwqdanchun.com/categories/Injection/
 https://blog.qwqdanchun.com/categories/Tools/
 https://blog.qwqdanchun.com/categories/Forensics/
 https://blog.qwqdanchun.com/categories/Life/
+https://blog.qwqdanchun.com/categories/Ch552/
