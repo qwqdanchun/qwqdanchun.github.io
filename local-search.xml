@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>无需登录，获取宝塔面板保存的数据库密码</title>
+    <link href="/BTPanel_Databases/"/>
+    <url>/BTPanel_Databases/</url>
+    
+    <content type="html"><![CDATA[<p>拿到装有宝塔面板的服务器后，在不登录面板的情况下不能直接查看数据库信息</p><p>为了解决这个问题，就制作了一个脚本去进行配置信息的解密</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br><span class="hljs-comment">#使用前pip3 install PyCryptodome</span><br><br><span class="hljs-comment">#下载/www/server/panel/data/div.pl文件，divtext为文件内容</span><br>divtext = <span class="hljs-string">&quot;3UOiALw6JWPa2F02dtN3+ynzUs9oXWcT5llyhivOBaI=&quot;</span><br><br><span class="hljs-comment">#下载/www/server/panel/data/default.db，此文件为sqlite数据库文件，打开数据库中databases表，encryptedpass为表中password的值</span><br>encryptedpass = <span class="hljs-string">&quot;BT-0x:tXeUcwJk+Lu5t+BTgGgLAIJbFXYxU84sZA8ak1yjvec=&quot;</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">db_decrypt</span>(<span class="hljs-params">data</span>):<br>    <span class="hljs-keyword">try</span>:<br>        key = __get_db_sgin()<br>        iv = __get_db_iv()<br>        str_arr = data.split(<span class="hljs-string">&#x27;\n&#x27;</span>)<br>        res_str = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-keyword">for</span> data <span class="hljs-keyword">in</span> str_arr:<br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> data: <span class="hljs-keyword">continue</span><br>            res_str += __aes_decrypt(data, key, iv)<br>    <span class="hljs-keyword">except</span>:<br>        res_str = data<br>    <span class="hljs-keyword">return</span> res_str<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">__get_db_sgin</span>():<br>    keystr = <span class="hljs-string">&#x27;3gP7+k_7lSNg3$+Fj!PKW+6$KYgHtw#R&#x27;</span><br>    key = <span class="hljs-string">&#x27;&#x27;</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">31</span>):<br>        <span class="hljs-keyword">if</span> i &amp; <span class="hljs-number">1</span> == <span class="hljs-number">0</span>:<br>            key += keystr[i]<br>    <span class="hljs-keyword">return</span> key<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">__get_db_iv</span>():<br>    div = __aes_decrypt_module(divtext)<br>    <span class="hljs-keyword">return</span> div<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">__aes_decrypt_module</span>(<span class="hljs-params">data</span>):<br>    key = <span class="hljs-string">&#x27;Z2B87NEAS2BkxTrh&#x27;</span><br>    iv = <span class="hljs-string">&#x27;WwadH66EGWpeeTT6&#x27;</span><br>    <span class="hljs-keyword">return</span> __aes_decrypt(data, key, iv)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">__aes_decrypt</span>(<span class="hljs-params">data, key, iv</span>):<br>    <span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES<br>    <span class="hljs-keyword">import</span> base64<br>    encodebytes = base64.decodebytes(data.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>))<br>    aes = AES.new(key.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>), AES.MODE_CBC, iv.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>))<br>    de_text = aes.decrypt(encodebytes)<br>    unpad = <span class="hljs-keyword">lambda</span> s: s[<span class="hljs-number">0</span>:-s[-<span class="hljs-number">1</span>]]<br>    de_text = unpad(de_text)<br>    <span class="hljs-keyword">return</span> de_text.decode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br><br><br>temptext = db_decrypt(encryptedpass[<span class="hljs-number">6</span>:])<br><span class="hljs-built_in">print</span>(temptext)<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Develop</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Decrypt</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Pillager开发记录-1</title>
     <link href="/Pillager_Forensics_1/"/>
     <url>/Pillager_Forensics_1/</url>
