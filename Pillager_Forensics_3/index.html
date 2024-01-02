@@ -16,26 +16,27 @@
   <meta name="author" content="qwqdanchun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="起源一年多以前，Jonas L在推特首次提出了这个注入方法，并在评论区提出了一些可能的利用方法。半年前，有人在GitHub发布了一份Poc，某种程度上进行了对注入方案的验证。 原理控制台程序，会有一个对应的Code Page，也就是代码页，这个东西是字符代码的一个映射，每个控制台对应两个代码页，一个输入一个输出。 大部分Code Page都是nls文件，但是看到有一部分是dll文件，确切地说是5开">
+    <meta name="description" content="网易邮箱大师的账号接管网易邮箱大师的数据文件默认保存在 %LocalAppdata%\Netease\MailMaster\data\app.db内，此文件为Sqlite格式储存 获取目录app.db的Account表中的每一行对应一个账号，DataPath项对应的值即为账号信息保存目录。  接管账号本地安装网易邮箱大师后，将上一步获取的文件夹，复制回本地，依次点击设置-邮箱设置-导入邮箱数据，选">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Code Page注入方法的武器化">
-<meta property="og:url" content="https://blog.qwqdanchun.com/CodePage_injection/index.html">
+<meta property="og:title" content="Pillager开发记录-3">
+<meta property="og:url" content="https://blog.qwqdanchun.com/Pillager_Forensics_3/index.html">
 <meta property="og:site_name" content="簞純&#39;s Blog">
-<meta property="og:description" content="起源一年多以前，Jonas L在推特首次提出了这个注入方法，并在评论区提出了一些可能的利用方法。半年前，有人在GitHub发布了一份Poc，某种程度上进行了对注入方案的验证。 原理控制台程序，会有一个对应的Code Page，也就是代码页，这个东西是字符代码的一个映射，每个控制台对应两个代码页，一个输入一个输出。 大部分Code Page都是nls文件，但是看到有一部分是dll文件，确切地说是5开">
+<meta property="og:description" content="网易邮箱大师的账号接管网易邮箱大师的数据文件默认保存在 %LocalAppdata%\Netease\MailMaster\data\app.db内，此文件为Sqlite格式储存 获取目录app.db的Account表中的每一行对应一个账号，DataPath项对应的值即为账号信息保存目录。  接管账号本地安装网易邮箱大师后，将上一步获取的文件夹，复制回本地，依次点击设置-邮箱设置-导入邮箱数据，选">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-11-25T13:03:31.000Z">
+<meta property="og:image" content="https://blog.qwqdanchun.com/image/Pillager_Forensics_3/1704203565377.png">
+<meta property="og:image" content="https://blog.qwqdanchun.com/image/Pillager_Forensics_3/1704202916298.png">
+<meta property="article:published_time" content="2024-01-02T12:16:33.000Z">
 <meta property="article:modified_time" content="2024-01-02T14:25:08.507Z">
 <meta property="article:author" content="qwqdanchun">
-<meta property="article:tag" content="Injection">
-<meta property="article:tag" content="CodePage">
-<meta property="article:tag" content="NLS">
+<meta property="article:tag" content="Forensics">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.qwqdanchun.com/image/Pillager_Forensics_3/1704203565377.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Code Page注入方法的武器化 - 簞純&#39;s Blog</title>
+  <title>Pillager开发记录-3 - 簞純&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -212,7 +213,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Code Page注入方法的武器化"></span>
+            <span id="subtitle" data-typed-text="Pillager开发记录-3"></span>
           
         </div>
 
@@ -228,8 +229,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-11-25 21:03" pubdate>
-          2022年11月25日 晚上
+        <time datetime="2024-01-02 20:16" pubdate>
+          2024年1月2日 晚上
         </time>
       </span>
     
@@ -240,7 +241,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.4k 字
+          262 字
         
       </span>
     
@@ -251,7 +252,7 @@
         
         
         
-          21 分钟
+          3 分钟
         
       </span>
     
@@ -304,17 +305,17 @@
     
     <div class="category row nomargin-x">
       <a class="category-item 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Injection"
-        id="heading-548bb431406ebb2d5ba9dd380ede692a" role="tab" data-toggle="collapse" href="#collapse-548bb431406ebb2d5ba9dd380ede692a"
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Forensics"
+        id="heading-9759d20db6b94132676173d6d2302ff4" role="tab" data-toggle="collapse" href="#collapse-9759d20db6b94132676173d6d2302ff4"
         aria-expanded="true"
       >
-        Injection
-        <span class="list-group-count">(1)</span>
+        Forensics
+        <span class="list-group-count">(4)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-548bb431406ebb2d5ba9dd380ede692a"
-           role="tabpanel" aria-labelledby="heading-548bb431406ebb2d5ba9dd380ede692a">
+      <div class="category-collapse collapse show" id="collapse-9759d20db6b94132676173d6d2302ff4"
+           role="tabpanel" aria-labelledby="heading-9759d20db6b94132676173d6d2302ff4">
         
         
           
@@ -323,10 +324,37 @@
     
       
       
-        <a href="/CodePage_injection/" title="Code Page注入方法的武器化"
+        <a href="/Telegram_Forensics/" title="Telegram取证相关的记录"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Telegram取证相关的记录</span>
+        </a>
+      
+    
+      
+      
+        <a href="/Pillager_Forensics_1/" title="Pillager开发记录-1"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Pillager开发记录-1</span>
+        </a>
+      
+    
+      
+      
+        <a href="/Pillager_Forensics_2/" title="Pillager开发记录-2"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Pillager开发记录-2</span>
+        </a>
+      
+    
+      
+      
+        <a href="/Pillager_Forensics_3/" title="Pillager开发记录-3"
            class="list-group-item list-group-item-action
            active">
-          <span class="category-post">Code Page注入方法的武器化</span>
+          <span class="category-post">Pillager开发记录-3</span>
         </a>
       
     
@@ -349,7 +377,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Code Page注入方法的武器化</h1>
+            <h1 style="display: none">Pillager开发记录-3</h1>
             
               <p class="note note-info">
                 
@@ -362,35 +390,12 @@
             
               <div class="markdown-body">
                 
-                <h1 id="起源"><a href="#起源" class="headerlink" title="起源"></a>起源</h1><p>一年多以前，<a target="_blank" rel="noopener" href="https://twitter.com/jonasLyk">Jonas L</a>在<a target="_blank" rel="noopener" href="https://twitter.com/jonasLyk/status/1352729173631135751">推特</a>首次提出了这个注入方法，并在评论区提出了一些可能的利用方法。半年前，有人在GitHub发布了一份<a target="_blank" rel="noopener" href="https://github.com/NtQuerySystemInformation/NlsCodeInjectionThroughRegistry">Poc</a>，某种程度上进行了对注入方案的验证。</p>
-<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>控制台程序，会有一个对应的Code Page，也就是代码页，这个东西是字符代码的一个映射，每个控制台对应两个代码页，一个输入一个输出。</p>
-<p>大部分Code Page都是nls文件，但是看到有一部分是dll文件，确切地说是5开头的五位数对应的部分（此处未经逆向，仅通过测试进行判断，如有错误，还请见谅）。通过修改或添加一个符合条件的代码页，就可以让使用这个代码页的进程加载这个dll。</p>
-<p>根据文档，这个dll需要有一个名称为NlsDllCodePageTranslation的导出函数，来保证其正常加载。</p>
-<p>在Jonas L的推特帖子中，使用控制台作为示例，直接通过chcp命令进行了演示，这也是最简单的一个实现方法。而后在评论区提到了SetThreadLocale、WM_INPUTLANGCHANGE等方法。后面出现的poc使用了SetThreadLocale的思路，但是由于api的限制，这个poc还使用了远程线程注入，所以只适合作为一个演示使用，并不适合在实战环境利用。</p>
-<h1 id="武器化思路"><a href="#武器化思路" class="headerlink" title="武器化思路"></a>武器化思路</h1><p>SetThreadLocale仅支持对当前线程进行修改，而WM_INPUTLANGCHANGE需求也较为苛刻。</p>
-<p>所以，针对已有进程进行注入并不现实，剩下就是对新进程的注入，也就是通常说的spawn。</p>
-<p>先考虑dll的问题，每次单独生成dll是不现实的，未经测试的陌生文件直接落地太不尊重目标机器的防护软件了。所以要考虑的就是使用一个通用的dll去加载指定位置的模块（dll或shellcode），所以可以制作一个从注册表、文件、环境变量等地方读取payload再加载的dll作为落地的文件。需要导出的NlsDllCodePageTranslation函数可以直接转发。</p>
-<p>确定了文件的方案之后，就是修改代码页的问题。首先是添加带有自己dll的代码页，经过查询<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/console/console-code-pages">文档</a>可以得知，修改 <code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\CodePage</code>即可。（这里的注册表键值默认路径是在对应的system32或者syswow64路径，可以通过..\回到上级目录，这里我选择的上级的Temp目录放置文件）</p>
-<p>而后考虑修改程序对应的代码页，这里有两种方法：</p>
-<ul>
-<li>如果直接选用cmd、powershell或类似的控制台程序作为spawn对象，可以在创建进程时指定将输入输出重定向（就是大部分远控或c2的远程shell实现原理），并输入chcp指令触发加载。</li>
-<li>更通用的<a target="_blank" rel="noopener" href="https://devblogs.microsoft.com/commandline/understanding-windows-console-host-settings/">方案</a>是修改HKEY_CURRENT_USER\Console里的注册表项，添加控制台程序路径，并指定其使用的Code Page。</li>
-</ul>
-<p>如果为了临时使用，可以使用第一种，如果想集成进现有框架，可以考虑第二个。第二个方案也可以作为一种被动触发的权限维持方案使用，适合针对运维人员。</p>
-<p>至此，整套方案就已经可以投入使用了，但是存在一些缺点，使用时要注意</p>
-<ol>
-<li>目标进程必须是控制台进程</li>
-<li>添加代码页需要管理员权限（添加一次即可，后续不再需要管理员权限）</li>
-<li>dll会落地，要考虑免杀</li>
-<li>不能用作inject，只能用于spawn</li>
-</ol>
-<h1 id="总结（演示）"><a href="#总结（演示）" class="headerlink" title="总结（演示）"></a>总结（演示）</h1><p>首先制作一个dll文件（注意位数），示例代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> comment(linker, <span class="hljs-string">&quot;/export:NlsDllCodePageTranslation=\&quot;C:\\Windows\\System32\\C_gsm7.NlsDllCodePageTranslation\&quot;&quot;</span>)</span><br><span class="hljs-comment">//#pragma comment(linker, &quot;/export:NlsDllCodePageTranslation=\&quot;C:\\Windows\\Syswow64\\C_gsm7.NlsDllCodePageTranslation\&quot;&quot;)</span><br><br><span class="hljs-function">BOOL APIENTRY <span class="hljs-title">DllMain</span><span class="hljs-params">(HMODULE hModule,</span></span><br><span class="hljs-params"><span class="hljs-function">    DWORD  ul_reason_for_call,</span></span><br><span class="hljs-params"><span class="hljs-function">    LPVOID lpReserved</span></span><br><span class="hljs-params"><span class="hljs-function">)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">switch</span> (ul_reason_for_call)<br>    &#123;<br>    <span class="hljs-keyword">case</span> DLL_PROCESS_ATTACH:<br>    &#123;<br>        <span class="hljs-comment">//Do Something You Want</span><br>    &#125;<br>    <span class="hljs-keyword">case</span> DLL_THREAD_ATTACH:<br>    <span class="hljs-keyword">case</span> DLL_THREAD_DETACH:<br>    <span class="hljs-keyword">case</span> DLL_PROCESS_DETACH:<br>        <span class="hljs-keyword">break</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> TRUE;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>将文件放置在C:\Windows\Temp中，并打开cmd输入如下命令行(记得修改第一行最后的文件名)：</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile">reg <span class="hljs-keyword">add</span><span class="language-bash"> <span class="hljs-string">&quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\CodePage&quot;</span> /v 55555 /d <span class="hljs-string">&quot;..\Temp\qwqdanchun.dll&quot;</span> /f</span><br><br>reg <span class="hljs-keyword">add</span><span class="language-bash"> <span class="hljs-string">&quot;HKEY_CURRENT_USER\Console\%SystemRoot%_system32_cmd.exe&quot;</span> /f</span><br><br>reg <span class="hljs-keyword">add</span><span class="language-bash"> <span class="hljs-string">&quot;HKEY_CURRENT_USER\Console\%SystemRoot%_system32_cmd.exe&quot;</span>  /v CodePage /t REG_DWORD /d 55555 /f</span><br></code></pre></td></tr></table></figure>
-
-<p>之后每次启动cmd都会加载这个dll。如果使用其他控制台程序，修改后两行的注册表项的名称即可。</p>
+                <h2 id="网易邮箱大师的账号接管"><a href="#网易邮箱大师的账号接管" class="headerlink" title="网易邮箱大师的账号接管"></a>网易邮箱大师的账号接管</h2><p>网易邮箱大师的数据文件默认保存在 <code>%LocalAppdata%\Netease\MailMaster\data\app.db</code>内，此文件为Sqlite格式储存</p>
+<h3 id="获取目录"><a href="#获取目录" class="headerlink" title="获取目录"></a>获取目录</h3><p>app.db的Account表中的每一行对应一个账号，DataPath项对应的值即为账号信息保存目录。</p>
+<p><img src="/image/Pillager_Forensics_3/1704203565377.png" srcset="/img/loading.gif" lazyload alt="1704203565377"></p>
+<h3 id="接管账号"><a href="#接管账号" class="headerlink" title="接管账号"></a>接管账号</h3><p>本地安装网易邮箱大师后，将上一步获取的文件夹，复制回本地，依次点击设置-邮箱设置-导入邮箱数据，选择文件夹路径即可</p>
+<p><img src="/image/Pillager_Forensics_3/1704202916298.png" srcset="/img/loading.gif" lazyload alt="1704202916298"></p>
+<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p>此工具开源于 <a target="_blank" rel="noopener" href="https://github.com/qwqdanchun/Pillager">https://github.com/qwqdanchun/Pillager</a> ，欢迎大家关注和使用</p>
 
                 
               </div>
@@ -409,7 +414,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Injection/" class="category-chain-item">Injection</a>
+  <a href="/categories/Forensics/" class="category-chain-item">Forensics</a>
   
   
 
@@ -424,11 +429,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Injection/">#Injection</a>
-      
-        <a href="/tags/CodePage/">#CodePage</a>
-      
-        <a href="/tags/NLS/">#NLS</a>
+        <a href="/tags/Forensics/">#Forensics</a>
       
     </div>
   
@@ -440,8 +441,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Code Page注入方法的武器化</div>
-      <div>https://blog.qwqdanchun.com/CodePage_injection/</div>
+      <div>Pillager开发记录-3</div>
+      <div>https://blog.qwqdanchun.com/Pillager_Forensics_3/</div>
     </div>
     <div class="license-meta">
       
@@ -453,7 +454,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年11月25日</div>
+          <div>2024年1月2日</div>
         </div>
       
       
@@ -496,9 +497,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/CobaltStrike_Modify/" title="CobaltStrike二次开发">
+                      <a href="/Pillager_Forensics_2/" title="Pillager开发记录-2">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CobaltStrike二次开发</span>
+                        <span class="hidden-mobile">Pillager开发记录-2</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -506,8 +507,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/PrintNightmare/" title="PrintNightmare 实战利用Tips">
-                        <span class="hidden-mobile">PrintNightmare 实战利用Tips</span>
+                      <a href="/BTPanel_Databases/" title="无需登录，获取宝塔面板保存的数据库密码">
+                        <span class="hidden-mobile">无需登录，获取宝塔面板保存的数据库密码</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -525,8 +526,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'https://blog.qwqdanchun.com/CodePage_injection/';
-          this.page.identifier = '/CodePage_injection/';
+          this.page.url = 'https://blog.qwqdanchun.com/Pillager_Forensics_3/';
+          this.page.identifier = '/Pillager_Forensics_3/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');
