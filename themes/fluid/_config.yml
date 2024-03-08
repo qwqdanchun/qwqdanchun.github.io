@@ -1048,12 +1048,23 @@ links:
       link: "https://www.sy4.top/",
       avatar: "/img/avatar.png"
     }
-    
     - {
       title: "Zy143L",
       intro: "宁宁's Blog",
       link: "https://momoe.link/",
       avatar: "https://momoe.link/img/tx.png"
+    }
+    - {
+      title: "蚊子",
+      intro: "蚊BloG",
+      link: "https://mozz.ie/",
+      avatar: "https://mozz.ie/assets/icon-circle.png"
+    }
+    - {
+      title: "Sp4ce",
+      intro: "Sp4ce's Blog",
+      link: "https://0x20h.com/",
+      avatar: "https://0x20h.com/img/avatar.jpg"
     }
     - {
       title: "To Add",
