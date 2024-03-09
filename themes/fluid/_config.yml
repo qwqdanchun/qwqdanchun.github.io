@@ -1067,6 +1067,12 @@ links:
       avatar: "https://0x20h.com/img/avatar.jpg"
     }
     - {
+      title: "MiaoTony",
+      intro: "仰望星空，脚踏实地，未来可期",
+      link: "https://miaotony.xyz/",
+      avatar: "https://miaotony.xyz/medias/avatar.jpg"
+    }
+    - {
       title: "To Add",
       intro: "No Intro",
       link: "/",
