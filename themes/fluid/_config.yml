@@ -1071,6 +1071,12 @@ links:
       intro: "仰望星空，脚踏实地，未来可期",
       link: "https://miaotony.xyz/",
       avatar: "https://miaotony.xyz/medias/avatar.jpg"
+    }    
+    - {
+      title: "九世",
+      intro: "九世's Blog",
+      link: "https://jiushill.github.io/",
+      avatar: "https://jiushill.github.io/img/avatar.jpg"
     }
     - {
       title: "To Add",
